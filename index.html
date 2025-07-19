@@ -3,7 +3,7 @@ p<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JLW CashFlow Mgr</title>
+    <title>App Dashboard</title>
     
     <meta name="theme-color" content="#4f46e5">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -227,11 +227,11 @@ p<!DOCTYPE html>
         // =================================================================================
         const CONSTANTS = {
             NAV_ITEMS: [
-                { id: 'cashDrop', label: 'Cash Drop Report', icon: 'Droplets' },
+                { id: 'cashflowReport', label: 'CashFlow Report', icon: 'PieChart' },
                 { id: 'saleReport', label: 'Sale Report', icon: 'BarChart3' },
+                { id: 'cashDrop', label: 'Cash Drop Report', icon: 'Droplets' },
                 { id: 'purchaseOrder', label: 'Purchase Order', icon: 'ShoppingCart' },
                 { id: 'expenseReport', label: 'Expense Report', icon: 'CreditCard' },
-                { id: 'cashflowReport', label: 'CashFlow Report', icon: 'PieChart' },
                 { id: 'settings', label: 'Settings', icon: 'Settings' },
             ],
             ALL_PAGES: [
@@ -573,7 +573,7 @@ p<!DOCTYPE html>
                         <div className="border-t border-slate-200 !my-4"></div>
                         <div className="flex justify-between items-center">
                             <span className="font-bold text-slate-800 text-lg">Sub-Total :</span>
-                            <span className="font-extrabold text-indigo-600 text-2xl">{grandTotal.toLocaleString('en-US', {minimumFractionDigits: 00.0})} ៛</span>
+                            <span className="font-extrabold text-indigo-600 text-2xl">{grandTotal.toLocaleString('en-US', {minimumFractionDigits: 0})} ៛</span>
                         </div>
                         <Button type="submit" disabled={isSubmitting} className="w-full !mt-6" icon={isSubmitting ? "LoaderCircle" : null}>
                             {isSubmitting ? 'Submitting...' : 'Submit Report'}
