@@ -6,7 +6,7 @@
     <title>JLW Management System</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#1e293b">
+    <meta name="theme-color" content="#2563eb">
     <link rel="manifest" id="manifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: #cbd5e1; }
+        body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: #d1d5db; }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         @keyframes spin {
@@ -54,7 +54,7 @@
             to { opacity: 0; transform: translateY(-20px); }
         }
         
-        /* Custom scrollbar for better aesthetics in dark theme */
+        /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1e293b; }
         ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
@@ -347,7 +347,7 @@
             <header className="mb-8 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-100">{title}</h1>
-                    {subtitle && <p className="mt-1 text-lg text-slate-400">{subtitle}</p>}
+                    {subtitle && <p className="mt-1 text-lg text-slate-300">{subtitle}</p>}
                 </div>
                 <div className="flex-shrink-0 flex items-center gap-2">{children}</div>
             </header>
@@ -373,8 +373,8 @@
             <div className="w-full">
                 {label && <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1.5">{label}</label>}
                 <div className="relative">
-                    {IconName && <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"><Icon name={IconName} className="h-5 w-5 text-slate-500" /></div>}
-                    <input name={name} id={name} {...props} className={`block w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm ${IconName ? 'pl-10' : ''}`} />
+                    {IconName && <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"><Icon name={IconName} className="h-5 w-5 text-gray-400" /></div>}
+                    <input name={name} id={name} {...props} className={`block w-full px-3 py-2 border border-slate-600 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm bg-slate-800 text-slate-100 disabled:bg-slate-700/50 disabled:text-slate-400 ${IconName ? 'pl-10' : ''}`} />
                 </div>
             </div>
         ));
@@ -382,14 +382,14 @@
         const FormTextarea = React.memo(({ label, name, ...props }) => (
             <div>
                 {label && <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1.5">{label}</label>}
-                <textarea name={name} id={name} {...props} rows="3" className="block w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm" />
+                <textarea name={name} id={name} {...props} rows="3" className="block w-full px-3 py-2 border border-slate-600 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm bg-slate-800 text-slate-100" />
             </div>
         ));
 
         const FormSelect = React.memo(({ label, name, options, ...props }) => (
             <div>
                 {label && <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1.5">{label}</label>}
-                <select name={name} id={name} {...props} className="block w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md shadow-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm">
+                <select name={name} id={name} {...props} className="block w-full px-3 py-2 border border-slate-600 bg-slate-800 text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm">
                     {options.map((opt, index) => <option key={`${opt.value}-${index}`} value={opt.value}>{opt.label}</option>)}
                 </select>
             </div>
@@ -420,7 +420,7 @@
         const Modal = ({ children, onClose, title, size = 'xl' }) => {
             const sizeClasses = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg', xl: 'max-w-xl', '2xl': 'max-w-2xl', '4xl': 'max-w-4xl' };
             return (
-                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-md">
                     <div className={`bg-slate-800 rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col modal-enter`}>
                         <header className="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-900/50 rounded-t-xl">
                             <h3 className="text-xl font-bold text-slate-100">{title}</h3>
@@ -448,7 +448,7 @@
 
         const NoteModal = React.memo(({ note, onClose }) => (
              <Modal title="Note" onClose={onClose} size="md">
-                <p className="text-sm text-slate-200 whitespace-pre-wrap bg-slate-700/50 p-4 rounded-lg">{note}</p>
+                <p className="text-sm text-slate-200 whitespace-pre-wrap bg-slate-700 p-4 rounded-lg">{note}</p>
                 <div className="flex justify-end mt-4">
                     <Button onClick={onClose} variant="secondary">Close</Button>
                 </div>
@@ -456,25 +456,25 @@
         ));
 
         const Notification = ({ message, type, onClose }) => {
-            const baseClasses = "fixed top-5 right-5 z-[100] flex items-center w-full max-w-xs p-4 space-x-4 rounded-lg shadow-2xl shadow-slate-900/50 space-x";
+            const baseClasses = "fixed top-5 right-5 z-[100] flex items-center w-full max-w-xs p-4 space-x-4 rounded-lg shadow-lg space-x border border-slate-600";
             const typeClasses = {
-                success: 'bg-green-900/50 text-green-300',
-                error: 'bg-red-900/50 text-red-300',
-                warning: 'bg-yellow-900/50 text-yellow-300',
-                info: 'bg-blue-900/50 text-blue-300',
+                success: 'text-green-300 bg-green-900/50',
+                error: 'text-red-300 bg-red-900/50',
+                warning: 'text-yellow-300 bg-yellow-900/50',
+                info: 'text-blue-300 bg-blue-900/50',
             };
             const icons = {
-                success: <Icon name="CheckCircle" className="text-green-500" />,
-                error: <Icon name="XCircle" className="text-red-500" />,
-                warning: <Icon name="AlertTriangle" className="text-yellow-500" />,
-                info: <Icon name="Info" className="text-blue-500" />,
+                success: <Icon name="CheckCircle" className="text-green-400" />,
+                error: <Icon name="XCircle" className="text-red-400" />,
+                warning: <Icon name="AlertTriangle" className="text-yellow-400" />,
+                info: <Icon name="Info" className="text-blue-400" />,
             };
 
             return (
                 <div className={`${baseClasses} ${typeClasses[type]} notification-enter`} role="alert">
                     <div className="flex-shrink-0">{icons[type]}</div>
-                    <div className="pl-4 text-sm font-normal">{message}</div>
-                    <button onClick={onClose} className="ml-auto -mx-1.5 -my-1.5 bg-transparent text-slate-400 hover:text-white rounded-lg focus:ring-2 focus:ring-slate-500 p-1.5 hover:bg-slate-700 inline-flex h-8 w-8">
+                    <div className="pl-4 text-sm font-medium">{message}</div>
+                    <button onClick={onClose} className="ml-auto -mx-1.5 -my-1.5 bg-transparent text-slate-400 hover:text-slate-100 rounded-lg focus:ring-2 focus:ring-slate-500 p-1.5 hover:bg-slate-700 inline-flex h-8 w-8">
                         <span className="sr-only">Close</span>
                         <Icon name="X" size={20} />
                     </button>
@@ -576,11 +576,11 @@
                 <>
                     <form onSubmit={(e) => { e.preventDefault(); setIsConfirming(true); }} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                         <Card className="lg:col-span-2 space-y-6">
-                            <h2 className="text-xl font-bold text-slate-100 border-b border-slate-700 pb-3">New Cash Drop Form</h2>
+                            <h2 className="text-xl font-bold text-slate-100 border-b border-slate-700 pb-4">New Cash Drop Form</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
                                 <FormSelect label="Shop" name="shop" value={formData.shop} onChange={handleChange} options={availableShops.map(s => ({value: s.name, label: s.name}))}/>
-                                <FormInput label="Staff" name="staff" value={formData.staff} disabled className="bg-slate-700/50"/>
+                                <FormInput label="Staff" name="staff" value={formData.staff} disabled />
                                 <FormSelect label="Shift" name="shift" value={formData.shift} onChange={handleChange} options={[{value:'Morning', label:'Morning'}, {value:'Afternoon', label:'Afternoon'}, {value:'Night', label:'Night'}]} />
                             </div>
                             <div className="space-y-4 pt-4 border-t border-slate-700">
@@ -612,7 +612,7 @@
                             <div className="border-t border-slate-700 !my-4"></div>
                             <div className="flex justify-between items-center">
                                 <span className="font-bold text-slate-100 text-lg">Grand Total: </span>
-                                <span className="font-extrabold text-red-500 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
+                                <span className="font-extrabold text-red-400 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
                             </div>
                             <Button type="submit" disabled={isSubmitting} className="w-full !mt-6" icon={isSubmitting ? "LoaderCircle" : null}>
                                 {isSubmitting ? 'Submitting...' : 'Submit Report'}
@@ -625,7 +625,7 @@
                         onConfirm={handleConfirmSubmit} 
                         onClose={() => setIsConfirming(false)} 
                         isSubmitting={isSubmitting}
-                        confirmText="Yes, Submit!"
+                        confirmText="Yes, Submit"
                     />}
                 </>
             );
@@ -715,12 +715,12 @@
 
             return (
                 <Card className="mt-8">
-                    <div className="flex flex-wrap justify-between items-center mb-4 gap-y-4">
+                    <div className="flex flex-wrap justify-between items-center mb-4 gap-y-4 border-b border-slate-700 pb-4">
                         <h2 className="text-xl font-bold text-slate-100">Daily Cash Drop History</h2>
                         <Button onClick={handleExport} variant="secondary" icon="Download">Export</Button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-slate-800/60 rounded-lg border border-slate-700">
                         <FormSelect label="Shop" name="shop" value={filters.shop} onChange={e => setFilters(f=>({...f, shop: e.target.value}))} options={[{value:'',label:'All Shops'}, ...shops.map(s=>({value:s.name, label:s.name}))]} />
                         <FormSelect label="Shift" name="shift" value={filters.shift} onChange={e => setFilters(f=>({...f, shift: e.target.value}))} options={[{value:'',label:'All Shifts'}, {value:'Morning',label:'Morning'}, {value:'Afternoon',label:'Afternoon'}, {value:'Night',label:'Night'}]} />
                         <FormInput label="Start Date" type="date" name="startDate" value={filters.startDate} onChange={e => setFilters(f=>({...f, startDate: e.target.value, dateRange: 'custom'}))}/>
@@ -729,7 +729,7 @@
                     
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
-                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                            <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                 <tr>
                                     <th className="p-3">Date & Time</th><th className="p-3">Shop</th><th className="p-3">Staff</th>
                                     <th className="p-3 text-right">Cash USD</th><th className="p-3 text-right">Cash KHR</th>
@@ -752,12 +752,12 @@
                                         </td>
                                         <td className="p-3 flex gap-1 justify-center">
                                             <Button variant="ghost" size="sm" onClick={() => setEditingReport(r)} disabled={!canEditDelete}><Icon name="PenSquare" size={16}/></Button>
-                                            <Button variant="ghost" size="sm" onClick={() => setDeletingReport(r)} disabled={!canEditDelete} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2" size={16}/></Button>
+                                            <Button variant="ghost" size="sm" onClick={() => setDeletingReport(r)} disabled={!canEditDelete} className="text-red-400 hover:bg-red-500/20"><Icon name="Trash2" size={16}/></Button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
-                            <tfoot className="bg-slate-800 font-semibold text-slate-200">
+                            <tfoot className="bg-slate-800 font-bold text-slate-200">
                                 <tr>
                                     <td colSpan={10} className="p-3">
                                         <div className="flex items-center justify-between">
@@ -773,8 +773,8 @@
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm">Page {currentPage} of {totalPages}</span>
-                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} variant="secondary">&lt;</Button>
-                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} variant="secondary">&gt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>&lt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>&gt;</Button>
                                             </div>
                                         </div>
                                     </td>
@@ -879,7 +879,7 @@
                             </div>
                         </div>
                         <div className="border-t border-slate-700 pt-4 flex justify-between items-center">
-                            <span className="font-bold text-slate-100 text-lg">Sub-Total</span>
+                            <span className="font-bold text-slate-200 text-lg">Sub-Total</span>
                             <span className="font-extrabold text-blue-400 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
                         </div>
                         <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
@@ -1047,7 +1047,7 @@
                 <div className="space-y-6">
                     <PageHeader title="Sale Report" subtitle="Aggregated sales data." />
                     <Card>
-                        <div className="flex justify-between items-center mb-4">
+                        <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
                             <h2 className="text-xl font-bold text-slate-200">Sale Report Filters</h2>
                             <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                         </div>
@@ -1070,10 +1070,10 @@
                     </Card>
 
                     <Card>
-                        <h2 className="text-xl font-bold mb-4 text-slate-200">Report Details</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-200 border-b border-slate-700 pb-4">Report Details</h2>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                                <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                     <tr>
                                         <th className="p-3">{isDailyView ? 'Date' : 'No.'}</th>
                                         <th className="p-3">Shop</th>
@@ -1088,7 +1088,7 @@
                                     {aggregatedData.length > 0 ? aggregatedData.map((item, index) => (
                                         <tr key={item.key} className="hover:bg-slate-700/50">
                                             <td className="p-3 text-slate-300">{isDailyView ? new Date(item.date).toLocaleDateString('en-GB') : index + 1}</td>
-                                            <td className="p-3 font-semibold text-slate-100">{item.shop}</td>
+                                            <td className="p-3 font-semibold text-slate-200">{item.shop}</td>
                                             <td className="p-3 text-right font-mono text-slate-300">{item.cashKhr.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono text-slate-300">{item.cashUsd.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono text-slate-300">{item.bankKhr.toLocaleString()}</td>
@@ -1107,7 +1107,7 @@
                                             <td className="p-3 text-right font-mono">{footerTotals.cashUsd.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono">{footerTotals.bankKhr.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono">{footerTotals.bankUsd.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono text-blue-400">{footerTotals.grandTotalKhr.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-blue-300">{footerTotals.grandTotalKhr.toLocaleString()}</td>
                                         </tr>
                                     </tfoot>
                                 )}
@@ -1124,7 +1124,7 @@
              const [activeTab, setActiveTab] = useState('pos');
 
             const TabButton = ({ tabName, label, isActive, onClick }) => (
-                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg transition-colors ${isActive ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50'}`}>
+                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg transition-colors ${isActive ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-200'}`}>
                     {label}
                 </button>
             );
@@ -1310,13 +1310,13 @@
             return (
                 <div className="space-y-6">
                     <Card>
-                        <h2 className="text-xl font-bold mb-4 text-slate-100 border-b border-slate-700 pb-3">{editingPO ? 'Edit Purchase Order' : 'Create Purchase Order'}</h2>
+                        <h2 className="text-xl font-bold mb-4 border-b border-slate-700 pb-4 text-slate-100">{editingPO ? 'Edit Purchase Order' : 'Create Purchase Order'}</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <FormInput label="PO Date" type="date" name="poDate" value={activeFormData.poDate} onChange={handleFormChange} />
                                 <FormSelect label="Shop" name="shop" value={activeFormData.shop} onChange={handleFormChange} options={availableShops.map(s => ({value: s.name, label: s.name}))} required />
                                 <FormSelect label="Order By" name="orderBy" value={activeFormData.orderBy} onChange={handleFormChange} options={staffList.map(s => ({value: s.name, label: s.name}))} disabled={userData.role !== 'Admin'}/>
-                                <FormInput label="Current GCA (៛)" value={currentGCA.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
+                                <FormInput label="Current GCA (៛)" value={currentGCA.toLocaleString()} disabled readOnly />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <SearchableSelect 
@@ -1331,7 +1331,7 @@
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <FormTextarea label="Note" name="note" value={activeFormData.note} onChange={handleFormChange} />
-                               <FormInput label="Sub-Total POs (៛)" value={subTotalPOs.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
+                               <FormInput label="Sub-Total POs (៛)" value={subTotalPOs.toLocaleString()} disabled readOnly />
                             </div>
                             <div className="flex justify-end gap-2">
                                 {editingPO && <Button type="button" variant="secondary" onClick={handleCancelEdit}>Cancel</Button>}
@@ -1403,14 +1403,14 @@
                                 filteredOptions.map(option => (
                                     <li 
                                         key={option.id} 
-                                        className="px-3 py-2 cursor-pointer hover:bg-slate-600 text-slate-200"
+                                        className="px-3 py-2 cursor-pointer hover:bg-blue-600/50 text-slate-200"
                                         onClick={() => handleSelect(option.name)}
                                     >
                                         {option.name}
                                     </li>
                                 ))
                             ) : (
-                                <li className="px-3 py-2 text-slate-500">No results found</li>
+                                <li className="px-3 py-2 text-slate-400">No results found</li>
                             )}
                         </ul>
                     )}
@@ -1526,11 +1526,11 @@
             
             return (
                 <Card>
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
                         <h2 className="text-xl font-bold text-slate-100">Purchase Order History</h2>
                         <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4 p-4 bg-slate-800/60 rounded-lg border border-slate-700">
                         <FormSelect label="Shop" name="shop" value={filters.shop} onChange={handleFilterChange} options={[{value:'', label:'All Shops'}, ...shops.map(s => ({value: s.name, label: s.name}))]} />
                         <FormSelect label="Vendor" name="vendor" value={filters.vendor} onChange={handleFilterChange} options={[{value: '', label:'All Vendors'}, ...vendors.map(v => ({value: v.name, label: v.name}))]} />
                         <FormSelect label="Status" name="status" value={filters.status} onChange={handleFilterChange} options={[{value:'', label:'All Status'}, {value:'Paid', label:'Paid'}, {value:'Unpaid', label:'Unpaid'}]} />
@@ -1539,7 +1539,7 @@
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
-                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                            <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                 <tr>
                                     <th className="p-3">PO Date</th><th className="p-3">Shop</th><th className="p-3">Vendor</th>
                                     <th className="p-3">Order By</th>
@@ -1551,11 +1551,12 @@
                             <tbody className="divide-y divide-slate-700">
                                 {paginatedPOs.map(po => {
                                     const subTotal = (po.amountKhr || 0) + ((po.amountUsd || 0) * (appSettings.exchangeRate || 4100));
+                                    const statusClass = po.status === 'Unpaid' ? 'bg-yellow-500/10' : '';
                                     return (
-                                    <tr key={po.id} className={`hover:bg-slate-700/50 ${po.status === 'Unpaid' ? 'bg-red-900/40' : ''}`}>
+                                    <tr key={po.id} className={`hover:bg-slate-700/50 ${statusClass}`}>
                                         <td className="p-3 text-slate-300">{formatInCambodiaDateOnly(po.date)}</td>
                                         <td className="p-3 text-slate-200">{po.shop}</td>
-                                        <td className="p-3 font-semibold text-slate-100">{po.vendor}</td>
+                                        <td className="p-3 font-semibold text-slate-200">{po.vendor}</td>
                                         <td className="p-3 text-slate-300">{po.orderBy}</td>
                                         <td className="p-3 text-right font-mono text-slate-300">{(po.amountKhr || 0).toLocaleString()}</td>
                                         <td className="p-3 text-right font-mono text-slate-300">{(po.amountUsd || 0).toLocaleString()}</td>
@@ -1564,7 +1565,7 @@
                                         <td className="p-3 flex gap-1 justify-center">
                                             {(userData.role === 'Admin' || userData.role === 'Management') && po.status === 'Unpaid' && <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(po.id)} className="text-green-400 font-bold">Mark Paid</Button>}
                                             {(userData.role === 'Admin' || userData.role === 'Management') && <Button variant="ghost" size="sm" onClick={() => onEdit(po)}><Icon name="PenSquare"/></Button>}
-                                            {userData.role === 'Admin' && <Button variant="ghost" size="sm" onClick={() => setDeletingPO(po)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>}
+                                            {userData.role === 'Admin' && <Button variant="ghost" size="sm" onClick={() => setDeletingPO(po)} className="text-red-400 hover:bg-red-500/20"><Icon name="Trash2"/></Button>}
                                         </td>
                                     </tr>
                                 )})}
@@ -1584,8 +1585,8 @@
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm">Page {currentPage} of {totalPages}</span>
-                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} variant="secondary">&lt;</Button>
-                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} variant="secondary">&gt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>&lt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>&gt;</Button>
                                             </div>
                                         </div>
                                     </td>
@@ -1738,7 +1739,7 @@
             return (
                 <div className="space-y-6">
                     <Card>
-                        <h2 className="text-xl font-bold mb-4 text-slate-100 border-b border-slate-700 pb-3">New Internal Transfer</h2>
+                        <h2 className="text-xl font-bold mb-4 border-b border-slate-700 pb-4 text-slate-100">New Internal Transfer</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
@@ -1749,7 +1750,7 @@
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <LiveFormatInput label="Amount (USD)" name="amountUsd" value={formData.amountUsd} onChange={handleChange} />
                                 <LiveFormatInput label="Amount (KHR)" name="amountKhr" value={formData.amountKhr} onChange={handleChange} />
-                                <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
+                                <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly />
                             </div>
                             <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
                             <div className="flex justify-end">
@@ -1760,18 +1761,18 @@
                         </form>
                     </Card>
                     <Card>
-                        <div className="flex justify-between items-center mb-4">
+                        <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
                             <h2 className="text-xl font-bold text-slate-100">Transfer History</h2>
                             <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-slate-800/60 rounded-lg border border-slate-700">
                             <FormSelect label="From Shop" name="fromShop" value={filters.fromShop} onChange={(e) => setFilters(p => ({...p, fromShop: e.target.value}))} options={[{value: '', label: 'All Shops'}, ...shops.map(s => ({value: s.name, label: s.name}))]} />
                             <FormInput label="Start Date" type="date" name="startDate" value={filters.startDate} onChange={(e) => setFilters(p => ({...p, startDate: e.target.value}))} />
                             <FormInput label="End Date" type="date" name="endDate" value={filters.endDate} onChange={(e) => setFilters(p => ({...p, endDate: e.target.value}))} />
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                                <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                     <tr>
                                         <th className="p-3">Date</th><th className="p-3">PO No.</th><th className="p-3">From</th><th className="p-3">To</th>
                                         <th className="p-3 text-right">Amount USD</th><th className="p-3 text-right">Amount KHR</th>
@@ -1791,9 +1792,9 @@
                                             <td className="p-3 text-right font-mono font-bold text-slate-200">{(t.totalAmount || 0).toLocaleString()}</td>
                                             <td className="p-3 text-slate-300">{t.status}{t.status === 'Paid' && t.paidAt ? ` (${formatInCambodiaTime(t.paidAt)})` : ''}</td>
                                             <td className="p-3 flex gap-1 justify-center">
-                                                {(userData.role === 'Admin' || userData.role === 'Management') && t.status !== 'Paid' && <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(t.id)}><Icon name="CheckCircle"/></Button>}
+                                                {(userData.role === 'Admin' || userData.role === 'Management') && t.status !== 'Paid' && <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(t.id)} className="text-green-400"><Icon name="CheckCircle"/></Button>}
                                                 {(userData.role === 'Admin' || userData.role === 'Management') && <Button variant="ghost" size="sm" onClick={() => setEditingTransfer(t)}><Icon name="PenSquare"/></Button>}
-                                                {(userData.role === 'Admin' || (userData.role === 'Management' && t.status !== 'Paid')) && <Button variant="ghost" onClick={() => setDeletingTransfer(t)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>}
+                                                {(userData.role === 'Admin' || (userData.role === 'Management' && t.status !== 'Paid')) && <Button variant="ghost" onClick={() => setDeletingTransfer(t)} className="text-red-400 hover:bg-red-500/20"><Icon name="Trash2"/></Button>}
                                             </td>
                                         </tr>
                                     ))}
@@ -1886,7 +1887,7 @@
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <LiveFormatInput label="Amount (USD)" name="amountUsd" value={formData.amountUsd} onChange={handleChange} />
                             <LiveFormatInput label="Amount (KHR)" name="amountKhr" value={formData.amountKhr} onChange={handleChange} />
-                            <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
+                            <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly />
                         </div>
                         <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
                         <div className="flex justify-end gap-4 pt-4 border-t border-slate-700">
@@ -1990,7 +1991,7 @@
             return (
                 <div className="space-y-6">
                     <Card>
-                        <div className="flex justify-between items-center mb-4">
+                        <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
                              <h2 className="text-xl font-bold text-slate-100">Vendor Report Filters</h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -2003,10 +2004,10 @@
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <Card>
-                            <h3 className="text-lg font-bold mb-4 text-slate-100">Top 10 Purchased Vendors</h3>
+                            <h3 className="text-lg font-bold mb-4 text-slate-200">Top 10 Purchased Vendors</h3>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
-                                    <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                                    <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                         <tr>
                                             <th className="p-2 text-left">Rank</th>
                                             <th className="p-2 text-left">Vendor</th>
@@ -2015,7 +2016,7 @@
                                     </thead>
                                     <tbody className="divide-y divide-slate-700">
                                         {vendorAnalysis.top10.map((v, i) => (
-                                            <tr key={v.id}>
+                                            <tr key={v.id} className="hover:bg-slate-700/50">
                                                 <td className="p-2 font-semibold text-slate-300">{i + 1}</td>
                                                 <td className="p-2 text-slate-200">{v.name}</td>
                                                 <td className="p-2 text-right font-mono text-slate-200">{v.totalValue.toLocaleString(undefined, {minimumFractionDigits: 0})}</td>
@@ -2026,10 +2027,10 @@
                             </div>
                         </Card>
                         <Card>
-                            <h3 className="text-lg font-bold mb-4 text-slate-100">Rarely / Never Purchased Vendors</h3>
+                            <h3 className="text-lg font-bold mb-4 text-slate-200">Rarely / Never Purchased Vendors</h3>
                              <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
-                                    <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                                    <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                         <tr>
                                             <th className="p-2 text-left">Vendor</th>
                                             <th className="p-2 text-center">No. of Purchases</th>
@@ -2037,7 +2038,7 @@
                                     </thead>
                                     <tbody className="divide-y divide-slate-700">
                                         {vendorAnalysis.rarelyPurchased.map(v => (
-                                            <tr key={v.id}>
+                                            <tr key={v.id} className="hover:bg-slate-700/50">
                                                 <td className="p-2 text-slate-200">{v.name}</td>
                                                 <td className="p-2 text-center font-mono text-slate-300">{v.purchaseCount}</td>
                                             </tr>
@@ -2049,10 +2050,10 @@
                     </div>
 
                     <Card>
-                        <h2 className="text-xl font-bold mb-4 text-slate-100">Purchase History Summary</h2>
+                        <h2 className="text-xl font-bold mb-4 border-b border-slate-700 pb-4 text-slate-100">Purchase History Summary</h2>
                         <div className="overflow-x-auto">
                              <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                                <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                     <tr>
                                         <th className="p-3">Month (MM-YY)</th>
                                         <th className="p-3">Shop Name</th>
@@ -2070,7 +2071,7 @@
                                         <tr key={group.key} className="hover:bg-slate-700/50">
                                             <td className="p-3 text-slate-300">{group.month}</td>
                                             <td className="p-3 text-slate-200">{group.shop}</td>
-                                            <td className="p-3 font-semibold text-slate-100">{group.vendor}</td>
+                                            <td className="p-3 font-semibold text-slate-200">{group.vendor}</td>
                                             <td className="p-3 text-center text-slate-300">{group.count}</td>
                                             <td className="p-3 text-right font-mono text-slate-300">{group.totalKhr.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono text-slate-300">{group.totalUsd.toLocaleString()}</td>
@@ -2131,13 +2132,13 @@
 
             return (
                 <Card>
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
                         <h2 className="text-xl font-bold text-slate-100">Vendor Management</h2>
                         <Button onClick={() => openModal()} icon="Plus">New Vendor</Button>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
-                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                            <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                 <tr>
                                     <th className="p-3">Vendor Name</th>
                                     <th className="p-3">Contact Person</th>
@@ -2148,10 +2149,10 @@
                                     <th className="p-3 text-center">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+                            <tbody className="text-sm text-slate-300 divide-y divide-slate-700">
                                 {vendors.map(vendor => (
                                     <tr key={vendor.id} className="hover:bg-slate-700/50">
-                                        <td className="p-3 font-semibold text-slate-100">{vendor.name}</td>
+                                        <td className="p-3 font-semibold text-slate-200">{vendor.name}</td>
                                         <td className="p-3">{vendor.contactPerson}</td>
                                         <td className="p-3">{vendor.phone}</td>
                                         <td className="p-3">{vendor.bankName}</td>
@@ -2159,7 +2160,7 @@
                                         <td className="p-3">{vendor.accountUsd}</td>
                                         <td className="p-3 flex gap-1 justify-center">
                                             <Button variant="ghost" onClick={() => openModal(vendor)}><Icon name="PenSquare"/></Button>
-                                            <Button variant="ghost" onClick={() => setDeletingVendor(vendor)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>
+                                            <Button variant="ghost" onClick={() => setDeletingVendor(vendor)} className="text-red-400 hover:bg-red-500/20"><Icon name="Trash2"/></Button>
                                         </td>
                                     </tr>
                                 ))}
@@ -2341,7 +2342,7 @@
                             {details.map(detail => (
                                 <div key={detail.label} className={`flex flex-col sm:flex-row sm:items-center ${detail.isNote ? 'items-start' : ''}`}>
                                     <p className="w-full sm:w-1/3 text-sm font-semibold text-slate-400">{detail.label}</p>
-                                    <p className={`w-full sm:w-2/3 text-slate-200 ${detail.isAmount ? 'font-mono' : ''} ${detail.isTotal ? 'font-bold text-lg text-red-500' : ''} ${detail.isNote ? 'whitespace-pre-wrap bg-slate-700/50 p-2 rounded-md mt-1 sm:mt-0' : ''}`}>
+                                    <p className={`w-full sm:w-2/3 text-slate-200 ${detail.isAmount ? 'font-mono' : ''} ${detail.isTotal ? 'font-bold text-lg text-red-400' : ''} ${detail.isNote ? 'whitespace-pre-wrap bg-slate-700 p-2 rounded-md mt-1 sm:mt-0' : ''}`}>
                                         {detail.value}
                                     </p>
                                 </div>
@@ -2427,7 +2428,7 @@
 
                 return (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4 text-slate-100 border-b border-slate-700 pb-3">{expense ? 'Edit' : 'Add New'} Expense</h2>
+                        <h2 className="text-xl font-bold mb-4 border-b border-slate-700 pb-4 text-slate-100">{expense ? 'Edit' : 'Add New'} Expense</h2>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                             <FormSelect label="Expense Type" name="expenseType" value={formData.expenseType} onChange={handleChange} options={expenseTypeOptions} />
                             <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
@@ -2445,7 +2446,7 @@
                             
                             <div className="p-2 bg-slate-700/50 rounded-md">
                                 <label className="block text-sm font-medium text-slate-300 mb-1">Sub-Total (KHR)</label>
-                                <p className="font-bold text-lg text-red-500">{formatCurrency(subTotalKhr, 'KHR')}</p>
+                                <p className="font-bold text-lg text-red-400">{formatCurrency(subTotalKhr, 'KHR')}</p>
                             </div>
                             
                             <div className="lg:col-span-4">
@@ -2468,11 +2469,11 @@
                     <ExpenseForm expense={editingExpense} onClear={() => setEditingExpense(null)} />
                     
                     <Card className="mt-8">
-                        <div className="flex justify-between items-center mb-4">
+                        <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
                             <h2 className="text-xl font-bold text-slate-100">Expense History</h2>
                             <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-slate-800/60 rounded-lg border border-slate-700">
                             <FormSelect label="Filter by Shop" name="shop" value={filters.shop} onChange={handleFilterChange} options={[{ value: 'all', label: 'All Shops' }, ...shops.map(s => ({ value: s.name, label: s.name }))]} />
                             <FormInput label="Filter by Month" type="month" name="month" value={filters.month} onChange={handleFilterChange} />
                             <FormSelect 
@@ -2499,18 +2500,18 @@
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                                <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                     <tr>
                                         <th className="p-3">Date</th><th className="p-3">Type</th><th className="p-3">Shop/Paid By</th>
                                         <th className="p-3">Category</th><th className="p-3 text-right">Total (KHR)</th>
                                         <th className="p-3">Note</th><th className="p-3 text-center">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
+                                <tbody className="text-sm text-slate-300 divide-y divide-slate-700">
                                     {filteredExpenses.map(exp => (
                                         <tr key={exp.id} className="hover:bg-slate-700/50">
                                             <td className="p-3">{formatInCambodiaDateOnly(exp.date)}</td>
-                                            <td className="p-3"><span className={`px-2 py-1 text-xs rounded-full ${exp.type === 'Business' ? 'bg-sky-900/50 text-sky-400' : 'bg-purple-900/50 text-purple-400'}`}>{exp.type}</span></td>
+                                            <td className="p-3"><span className={`px-2 py-1 text-xs rounded-full ${exp.type === 'Business' ? 'bg-sky-900/60 text-sky-300' : 'bg-purple-900/60 text-purple-300'}`}>{exp.type}</span></td>
                                             <td className="p-3">{exp.shop || exp.paidBy || 'N/A'}</td>
                                             <td className="p-3">{exp.category}</td>
                                             <td className="p-3 text-right font-mono">{exp.totalAmountKhr?.toLocaleString()}</td>
@@ -2518,7 +2519,7 @@
                                             <td className="p-3 flex gap-1 justify-center">
                                                 <Button variant="ghost" onClick={() => setViewingExpense(exp)}><Icon name="Eye"/></Button>
                                                 <Button variant="ghost" onClick={() => setEditingExpense(exp)}><Icon name="PenSquare"/></Button>
-                                                <Button variant="ghost" onClick={() => setDeletingExpense(exp)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>
+                                                <Button variant="ghost" onClick={() => setDeletingExpense(exp)} className="text-red-400 hover:bg-red-500/20"><Icon name="Trash2"/></Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -2555,7 +2556,7 @@
                     const canvas = await html2canvas(printRef.current, { 
                         useCORS: true, 
                         scale: 2,
-                        backgroundColor: '#0f172a' // Set background for capture
+                        backgroundColor: '#0f172a' // slate-900
                     });
                     const image = canvas.toDataURL("image/png", 1.0);
                     const link = document.createElement('a');
@@ -2573,7 +2574,7 @@
             }, [filters.month, showNotification]);
 
             const TabButton = ({ tabName, label, isActive, onClick }) => (
-                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg transition-colors ${isActive ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50'}`}>
+                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg transition-colors ${isActive ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-200'}`}>
                     {label}
                 </button>
             );
@@ -2595,7 +2596,7 @@
                         <FormInput label="Select Month" type="month" name="month" value={filters.month} onChange={(e) => setFilters({ month: e.target.value })} />
                     </Card>
                     
-                    <div ref={printRef} className="bg-slate-900 p-4 rounded-lg space-y-8">
+                    <div ref={printRef} className="bg-slate-900 p-4 rounded-lg space-y-8 mt-6">
                         {activeTab === 'shareholderNet' && <ShareholderNetTab filters={filters} />}
                         {activeTab === 'cashflowHistory' && <CashflowHistoryTab filters={filters} />}
                         {activeTab === 'iitPayment' && <IitPaymentTab filters={filters} />}
@@ -2691,10 +2692,10 @@
 
             return (
                 <Card>
-                    <h3 className="text-lg font-bold mb-4 text-slate-100">Shareholder NET</h3>
+                    <h3 className="text-lg font-bold mb-4 text-slate-100 border-b border-slate-700 pb-4">Shareholder NET</h3>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
-                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                            <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                 <tr>
                                     <th className="p-2 text-left">No.</th><th className="p-2 text-left">Shareholder</th>
                                     <th className="p-2 text-right">Total GCA</th><th className="p-2 text-right">Total Net-Income</th>
@@ -2702,12 +2703,12 @@
                                     <th className="p-2 text-right">Total COH</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-700">
+                            <tbody className="divide-y divide-slate-700 text-slate-300">
                                 {Object.entries(shareholderData).map(([name, d], index) => (
-                                    <tr key={name}>
-                                        <td className="p-2 text-slate-300">{index + 1}</td><td className="p-2 font-semibold text-slate-100">{name}</td>
-                                        <td className="p-2 text-right font-mono text-slate-300">{d.totalGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono text-slate-300">{d.totalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                    <tr key={name} className="hover:bg-slate-700/50">
+                                        <td className="p-2">{index + 1}</td><td className="p-2 font-semibold text-slate-200">{name}</td>
+                                        <td className="p-2 text-right font-mono">{d.totalGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono">{d.totalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                                         <td className="p-2 text-right font-mono text-red-400">{d.familyExpense.toLocaleString()}</td>
                                         <td className="p-2 text-right font-mono font-bold text-slate-200">{d.finalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                                         <td className="p-2 text-right font-mono font-bold text-blue-400">{d.totalCOH.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
@@ -2767,10 +2768,10 @@
 
             return (
                 <Card>
-                    <h3 className="text-lg font-bold mb-4 text-slate-100">CashFlow History</h3>
+                    <h3 className="text-lg font-bold mb-4 text-slate-100 border-b border-slate-700 pb-4">CashFlow History</h3>
                     <div className="overflow-x-auto">
                        <table className="w-full text-sm">
-                             <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                             <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                 <tr>
                                     <th className="p-2 text-left">No.</th><th className="p-2 text-left">Shop</th>
                                     <th className="p-2 text-right">Current GCA (៛)</th><th className="p-2 text-right">Net Sale</th>
@@ -2779,19 +2780,19 @@
                                     <th className="p-2 text-right">Total Biz Expense</th><th className="p-2 text-right">Total Net Income</th>
                                 </tr>
                              </thead>
-                             <tbody className="divide-y divide-slate-700">
+                             <tbody className="divide-y divide-slate-700 text-slate-300">
                                 {shopCalculations.map((shop, index) => (
-                                    <tr key={shop.name}>
-                                        <td className="p-2 text-slate-300">{index+1}</td>
-                                        <td className="p-2 font-semibold text-slate-100">{shop.name}</td>
-                                        <td className="p-2 text-right font-mono text-slate-300">{shop.currentGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono text-slate-300">{shop.netSale.toLocaleString()}</td>
+                                    <tr key={shop.name} className="hover:bg-slate-700/50">
+                                        <td className="p-2">{index+1}</td>
+                                        <td className="p-2 font-semibold text-slate-200">{shop.name}</td>
+                                        <td className="p-2 text-right font-mono">{shop.currentGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono">{shop.netSale.toLocaleString()}</td>
                                         <td className="p-2 text-right font-mono text-green-400">{shop.netProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                                         <td className="p-2 text-right font-mono text-red-400">{shop.totalPO.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono text-slate-300">{shop.totalTransIn.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono text-slate-300">{shop.totalTransOut.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono">{shop.totalTransIn.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono">{shop.totalTransOut.toLocaleString()}</td>
                                         <td className="p-2 text-right font-mono text-red-400">{shop.totalBizExpense.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono font-bold text-blue-400 bg-blue-900/30">{shop.totalNetIncome.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono font-bold text-blue-400 bg-blue-900/20">{shop.totalNetIncome.toLocaleString()}</td>
                                     </tr>
                                 ))}
                              </tbody>
@@ -2805,7 +2806,7 @@
                                     <td className="p-2 text-right font-mono">{totals.totalTransIn?.toLocaleString()}</td>
                                     <td className="p-2 text-right font-mono">{totals.totalTransOut?.toLocaleString()}</td>
                                     <td className="p-2 text-right font-mono">{totals.totalBizExpense?.toLocaleString()}</td>
-                                    <td className="p-2 text-right font-mono text-blue-400">{totals.totalNetIncome?.toLocaleString()}</td>
+                                    <td className="p-2 text-right font-mono text-blue-300">{totals.totalNetIncome?.toLocaleString()}</td>
                                 </tr>
                              </tfoot>
                         </table>
@@ -2845,7 +2846,7 @@
 
             return (
                 <Card>
-                    <h3 className="text-lg font-bold mb-4 text-slate-100">IIT Payment Report</h3>
+                    <h3 className="text-lg font-bold mb-4 text-slate-100 border-b border-slate-700 pb-4">IIT Payment Report</h3>
                      <div className="mb-4">
                         {isCapturing ? (
                             <div>
@@ -2860,17 +2861,17 @@
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
-                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
+                            <thead className="bg-slate-900/50 text-xs text-slate-400 uppercase font-semibold">
                                 <tr>
                                     <th className="p-2 text-left">No.</th><th className="p-2 text-left">Shop Payee</th>
                                     <th className="p-2 text-left">Shop Receiver</th><th className="p-2 text-right">Total Amount (៛)</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-700">
+                            <tbody className="divide-y divide-slate-700 text-slate-300">
                                 {iitPaymentData.map((t, index) => (
-                                    <tr key={index}>
-                                        <td className="p-2 text-slate-300">{index + 1}</td><td className="p-2 text-slate-200">{t.payee}</td>
-                                        <td className="p-2 text-slate-200">{t.receiver}</td><td className="p-2 text-right font-mono text-slate-300">{(t.totalAmount || 0).toLocaleString()}</td>
+                                    <tr key={index} className="hover:bg-slate-700/50">
+                                        <td className="p-2">{index + 1}</td><td className="p-2 text-slate-200">{t.payee}</td>
+                                        <td className="p-2 text-slate-200">{t.receiver}</td><td className="p-2 text-right font-mono text-slate-200">{(t.totalAmount || 0).toLocaleString()}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -3837,3 +3838,4 @@
 
 </body>
 </html>
+
