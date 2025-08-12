@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
+<html lang="en" class="h-full bg-slate-900">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JLW Management System</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#4f46e5">
+    <meta name="theme-color" content="#1e293b">
     <link rel="manifest" id="manifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        body { background-color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: #cbd5e1; }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         @keyframes spin {
@@ -54,11 +54,11 @@
             to { opacity: 0; transform: translateY(-20px); }
         }
         
-        /* Custom scrollbar for better aesthetics */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        /* Custom scrollbar for better aesthetics in dark theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
 </head>
 <body class="h-full">
@@ -271,10 +271,8 @@
         const formatCurrency = (val, currency = 'KHR') => {
             const num = parseFormattedNumber(val);
             if (currency === 'KHR') {
-                // Format to 2 decimal places with comma separators and the Riel symbol
                 return `${num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}៛`;
             }
-            // Original USD formatting
             const options = {
                 style: 'currency',
                 currency: 'USD',
@@ -332,15 +330,15 @@
                 Plus: <Svg><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></Svg>,
                 Eye: <Svg><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></Svg>,
                 EyeOff: <Svg><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></Svg>,
-                ArrowUpCircle: <Svg><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></Svg>,
-                ArrowDownCircle: <Svg><circle cx="12" cy="12" r="10"/><path d="m8 12 4 4 4-4"/><path d="M12 8v8"/></Svg>,
+                ArrowUp: <Svg><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></Svg>,
+                ArrowDown: <Svg><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></Svg>,
             };
 
             return iconMap[name] || iconMap.HelpCircle;
         });
 
         const Card = ({ children, className = "", ...props }) => (
-            <div className={`bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-200/80 ${className}`} {...props}>
+            <div className={`bg-slate-800/50 p-4 sm:p-6 rounded-lg shadow-lg border border-slate-700 ${className}`} {...props}>
                 {children}
             </div>
         );
@@ -348,20 +346,20 @@
         const PageHeader = ({ title, subtitle, children }) => (
             <header className="mb-8 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
-                    {subtitle && <p className="mt-1 text-lg text-gray-600">{subtitle}</p>}
+                    <h1 className="text-3xl font-bold text-slate-100">{title}</h1>
+                    {subtitle && <p className="mt-1 text-lg text-slate-400">{subtitle}</p>}
                 </div>
                 <div className="flex-shrink-0 flex items-center gap-2">{children}</div>
             </header>
         );
         
         const Button = ({ children, onClick, variant = 'primary', disabled = false, className = '', icon: IconName, ...props }) => {
-            const baseStyles = 'px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+            const baseStyles = 'px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900';
             const variants = {
-                primary: 'bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-indigo-400 focus:ring-indigo-500',
-                secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 disabled:bg-gray-200 focus:ring-gray-400',
-                danger: 'bg-red-600 text-white hover:bg-red-700 disabled:bg-red-400 focus:ring-red-500',
-                ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-indigo-500'
+                primary: 'bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-800/50 focus:ring-blue-500',
+                secondary: 'bg-slate-700 text-slate-200 hover:bg-slate-600 disabled:bg-slate-800 focus:ring-slate-500',
+                danger: 'bg-red-600 text-white hover:bg-red-700 disabled:bg-red-800/50 focus:ring-red-500',
+                ghost: 'bg-transparent text-slate-300 hover:bg-slate-700/50 focus:ring-blue-500'
             };
             return (
                 <button onClick={onClick} disabled={disabled} className={`${baseStyles} ${variants[variant]} ${className}`} {...props}>
@@ -373,25 +371,25 @@
 
         const FormInput = React.memo(({ label, name, icon: IconName, ...props }) => (
             <div className="w-full">
-                {label && <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>}
+                {label && <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1.5">{label}</label>}
                 <div className="relative">
-                    {IconName && <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"><Icon name={IconName} className="h-5 w-5 text-gray-400" /></div>}
-                    <input name={name} id={name} {...props} className={`block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent sm:text-sm ${IconName ? 'pl-10' : ''}`} />
+                    {IconName && <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"><Icon name={IconName} className="h-5 w-5 text-slate-500" /></div>}
+                    <input name={name} id={name} {...props} className={`block w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm ${IconName ? 'pl-10' : ''}`} />
                 </div>
             </div>
         ));
         
         const FormTextarea = React.memo(({ label, name, ...props }) => (
             <div>
-                {label && <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>}
-                <textarea name={name} id={name} {...props} rows="3" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent sm:text-sm" />
+                {label && <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1.5">{label}</label>}
+                <textarea name={name} id={name} {...props} rows="3" className="block w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm" />
             </div>
         ));
 
         const FormSelect = React.memo(({ label, name, options, ...props }) => (
             <div>
-                {label && <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>}
-                <select name={name} id={name} {...props} className="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent sm:text-sm">
+                {label && <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1.5">{label}</label>}
+                <select name={name} id={name} {...props} className="block w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-md shadow-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm">
                     {options.map((opt, index) => <option key={`${opt.value}-${index}`} value={opt.value}>{opt.label}</option>)}
                 </select>
             </div>
@@ -422,10 +420,10 @@
         const Modal = ({ children, onClose, title, size = 'xl' }) => {
             const sizeClasses = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg', xl: 'max-w-xl', '2xl': 'max-w-2xl', '4xl': 'max-w-4xl' };
             return (
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-                    <div className={`bg-gray-50 rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col modal-enter`}>
-                        <header className="flex justify-between items-center p-4 border-b bg-white rounded-t-xl">
-                            <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+                    <div className={`bg-slate-800 rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col modal-enter`}>
+                        <header className="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-900/50 rounded-t-xl">
+                            <h3 className="text-xl font-bold text-slate-100">{title}</h3>
                             <Button variant="ghost" onClick={onClose} className="p-1 rounded-full" icon="X" />
                         </header>
                         <div className="p-6 overflow-y-auto">{children}</div>
@@ -437,7 +435,7 @@
         const ConfirmationModal = React.memo(({ title, message, onConfirm, onClose, isSubmitting, confirmVariant = 'primary', confirmText = 'Confirm' }) => (
             <Modal title={title} onClose={onClose} size="sm">
                 <div className="space-y-4">
-                    <p className="text-sm text-gray-600">{message}</p>
+                    <p className="text-sm text-slate-300">{message}</p>
                     <div className="flex justify-end gap-4">
                         <Button onClick={onClose} variant="secondary">Cancel</Button>
                         <Button onClick={onConfirm} disabled={isSubmitting} variant={confirmVariant} className="w-28" icon={isSubmitting ? "LoaderCircle" : null}>
@@ -450,7 +448,7 @@
 
         const NoteModal = React.memo(({ note, onClose }) => (
              <Modal title="Note" onClose={onClose} size="md">
-                <p className="text-sm text-gray-800 whitespace-pre-wrap bg-gray-100 p-4 rounded-lg">{note}</p>
+                <p className="text-sm text-slate-200 whitespace-pre-wrap bg-slate-700/50 p-4 rounded-lg">{note}</p>
                 <div className="flex justify-end mt-4">
                     <Button onClick={onClose} variant="secondary">Close</Button>
                 </div>
@@ -458,12 +456,12 @@
         ));
 
         const Notification = ({ message, type, onClose }) => {
-            const baseClasses = "fixed top-5 right-5 z-[100] flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow-2xl space-x";
+            const baseClasses = "fixed top-5 right-5 z-[100] flex items-center w-full max-w-xs p-4 space-x-4 rounded-lg shadow-2xl shadow-slate-900/50 space-x";
             const typeClasses = {
-                success: 'text-green-800 bg-green-50',
-                error: 'text-red-800 bg-red-50',
-                warning: 'text-yellow-800 bg-yellow-50',
-                info: 'text-blue-800 bg-blue-50',
+                success: 'bg-green-900/50 text-green-300',
+                error: 'bg-red-900/50 text-red-300',
+                warning: 'bg-yellow-900/50 text-yellow-300',
+                info: 'bg-blue-900/50 text-blue-300',
             };
             const icons = {
                 success: <Icon name="CheckCircle" className="text-green-500" />,
@@ -476,7 +474,7 @@
                 <div className={`${baseClasses} ${typeClasses[type]} notification-enter`} role="alert">
                     <div className="flex-shrink-0">{icons[type]}</div>
                     <div className="pl-4 text-sm font-normal">{message}</div>
-                    <button onClick={onClose} className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8">
+                    <button onClick={onClose} className="ml-auto -mx-1.5 -my-1.5 bg-transparent text-slate-400 hover:text-white rounded-lg focus:ring-2 focus:ring-slate-500 p-1.5 hover:bg-slate-700 inline-flex h-8 w-8">
                         <span className="sr-only">Close</span>
                         <Icon name="X" size={20} />
                     </button>
@@ -542,7 +540,6 @@
                     };
                     await addDoc(collection(window.db, "cashDrops"), cashDropData);
                     
-                    // Trigger Make.com webhook
                     fetch(CONSTANTS.MAKE_WEBHOOK_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -579,23 +576,23 @@
                 <>
                     <form onSubmit={(e) => { e.preventDefault(); setIsConfirming(true); }} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                         <Card className="lg:col-span-2 space-y-6">
-                            <h2 className="text-xl font-bold text-gray-800">New Cash Drop Form</h2>
+                            <h2 className="text-xl font-bold text-slate-100 border-b border-slate-700 pb-3">New Cash Drop Form</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
                                 <FormSelect label="Shop" name="shop" value={formData.shop} onChange={handleChange} options={availableShops.map(s => ({value: s.name, label: s.name}))}/>
-                                <FormInput label="Staff" name="staff" value={formData.staff} disabled className="bg-gray-100"/>
+                                <FormInput label="Staff" name="staff" value={formData.staff} disabled className="bg-slate-700/50"/>
                                 <FormSelect label="Shift" name="shift" value={formData.shift} onChange={handleChange} options={[{value:'Morning', label:'Morning'}, {value:'Afternoon', label:'Afternoon'}, {value:'Night', label:'Night'}]} />
                             </div>
-                            <div className="space-y-4 pt-4 border-t">
+                            <div className="space-y-4 pt-4 border-t border-slate-700">
                                 <div>
-                                    <h3 className="text-md font-semibold text-slate-600">By Cash</h3>
+                                    <h3 className="text-md font-semibold text-slate-300">By Cash</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                                         <LiveFormatInput label="KHR (៛)" name="cashKhr" value={formData.cashKhr} onChange={handleChange} />
                                         <LiveFormatInput label="USD ($)" name="cashUsd" value={formData.cashUsd} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 className="text-md font-semibold text-slate-600">By Bank</h3>
+                                    <h3 className="text-md font-semibold text-slate-300">By Bank</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                                         <LiveFormatInput label="KHR (៛)" name="bankKhr" value={formData.bankKhr} onChange={handleChange} />
                                         <LiveFormatInput label="USD ($)" name="bankUsd" value={formData.bankUsd} onChange={handleChange} />
@@ -605,17 +602,17 @@
                             <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} placeholder="Add an optional note..." />
                         </Card>
                         <Card className="lg:col-span-1 space-y-4 sticky top-24">
-                            <h3 className="text-xl font-bold text-slate-800">Summary</h3>
+                            <h3 className="text-xl font-bold text-slate-100">Summary</h3>
                             <div className="space-y-3 text-md">
-                                <div className="flex justify-between items-center"><span className="text-slate-600">Cash KHR:</span><span className="font-mono font-semibold text-slate-800">{formatCurrency(formData.cashKhr, 'KHR')}</span></div>
-                                <div className="flex justify-between items-center"><span className="text-slate-600">Cash USD:</span><span className="font-mono font-semibold text-slate-800">{formatCurrency(formData.cashUsd, 'USD')}</span></div>
-                                <div className="flex justify-between items-center"><span className="text-slate-600">Bank KHR:</span><span className="font-mono font-semibold text-slate-800">{formatCurrency(formData.bankKhr, 'KHR')}</span></div>
-                                <div className="flex justify-between items-center"><span className="text-slate-600">Bank USD:</span><span className="font-mono font-semibold text-slate-800">{formatCurrency(formData.bankUsd, 'USD')}</span></div>
+                                <div className="flex justify-between items-center"><span className="text-slate-400">Cash KHR:</span><span className="font-mono font-semibold text-slate-200">{formatCurrency(formData.cashKhr, 'KHR')}</span></div>
+                                <div className="flex justify-between items-center"><span className="text-slate-400">Cash USD:</span><span className="font-mono font-semibold text-slate-200">{formatCurrency(formData.cashUsd, 'USD')}</span></div>
+                                <div className="flex justify-between items-center"><span className="text-slate-400">Bank KHR:</span><span className="font-mono font-semibold text-slate-200">{formatCurrency(formData.bankKhr, 'KHR')}</span></div>
+                                <div className="flex justify-between items-center"><span className="text-slate-400">Bank USD:</span><span className="font-mono font-semibold text-slate-200">{formatCurrency(formData.bankUsd, 'USD')}</span></div>
                             </div>
-                            <div className="border-t border-slate-200 !my-4"></div>
+                            <div className="border-t border-slate-700 !my-4"></div>
                             <div className="flex justify-between items-center">
-                                <span className="font-bold text-slate-800 text-lg">Grand Total: </span>
-                                <span className="font-extrabold text-red-600 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
+                                <span className="font-bold text-slate-100 text-lg">Grand Total: </span>
+                                <span className="font-extrabold text-red-500 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
                             </div>
                             <Button type="submit" disabled={isSubmitting} className="w-full !mt-6" icon={isSubmitting ? "LoaderCircle" : null}>
                                 {isSubmitting ? 'Submitting...' : 'Submit Report'}
@@ -624,11 +621,11 @@
                     </form>
                     {isConfirming && <ConfirmationModal 
                         title="Confirm Report Submission"
-                        message="សូមពិនិត្យមើលព័ត៌មានលម្អិតមុនពេលបញ្ជូន។ តើគ្រប់យ៉ាងត្រឹមត្រូវទេ?"
+                        message="Please review the details before submitting. Is everything correct?"
                         onConfirm={handleConfirmSubmit} 
                         onClose={() => setIsConfirming(false)} 
                         isSubmitting={isSubmitting}
-                        confirmText="បាទ/ចាស៎​ !"
+                        confirmText="Yes, Submit!"
                     />}
                 </>
             );
@@ -710,20 +707,20 @@
             
             const canEditDelete = userData?.role === 'Admin' || userData?.role === 'Management';
 
-            const shopColors = ['bg-blue-50', 'bg-green-50', 'bg-yellow-50', 'bg-red-50', 'bg-purple-50', 'bg-pink-50', 'bg-indigo-50', 'bg-teal-50'];
+            const shopColors = ['bg-blue-900/30', 'bg-green-900/30', 'bg-yellow-900/30', 'bg-red-900/30', 'bg-purple-900/30', 'bg-pink-900/30', 'bg-indigo-900/30', 'bg-teal-900/30'];
             const getShopColor = (shopName) => {
                 const index = shops.findIndex(s => s.name === shopName);
-                return shopColors[index % shopColors.length] || 'bg-gray-50';
+                return shopColors[index % shopColors.length] || 'bg-slate-800/50';
             };
 
             return (
                 <Card className="mt-8">
                     <div className="flex flex-wrap justify-between items-center mb-4 gap-y-4">
-                        <h2 className="text-xl font-bold text-gray-800">Daily Cash Drop History</h2>
+                        <h2 className="text-xl font-bold text-slate-100">Daily Cash Drop History</h2>
                         <Button onClick={handleExport} variant="secondary" icon="Download">Export</Button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-gray-50 rounded-lg border">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
                         <FormSelect label="Shop" name="shop" value={filters.shop} onChange={e => setFilters(f=>({...f, shop: e.target.value}))} options={[{value:'',label:'All Shops'}, ...shops.map(s=>({value:s.name, label:s.name}))]} />
                         <FormSelect label="Shift" name="shift" value={filters.shift} onChange={e => setFilters(f=>({...f, shift: e.target.value}))} options={[{value:'',label:'All Shifts'}, {value:'Morning',label:'Morning'}, {value:'Afternoon',label:'Afternoon'}, {value:'Night',label:'Night'}]} />
                         <FormInput label="Start Date" type="date" name="startDate" value={filters.startDate} onChange={e => setFilters(f=>({...f, startDate: e.target.value, dateRange: 'custom'}))}/>
@@ -732,7 +729,7 @@
                     
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
-                            <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                 <tr>
                                     <th className="p-3">Date & Time</th><th className="p-3">Shop</th><th className="p-3">Staff</th>
                                     <th className="p-3 text-right">Cash USD</th><th className="p-3 text-right">Cash KHR</th>
@@ -740,33 +737,33 @@
                                     <th className="p-3 text-right">Net Sale (៛)</th><th className="p-3 text-center">Note</th><th className="p-3 text-center">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="divide-y divide-slate-700">
                                 {paginatedReports.map(r => (
-                                    <tr key={r.id} className={`border-b hover:bg-gray-100 ${getShopColor(r.shop)}`}>
-                                        <td className="p-3">{formatInCambodiaTime(r.createdAt)}</td>
-                                        <td className="p-3">{r.shop}</td><td className="p-3">{r.staff}</td>
-                                        <td className="p-3 text-right font-mono">{formatCurrency(r.cashUsd, 'USD')}</td>
-                                        <td className="p-3 text-right font-mono">{formatCurrency(r.cashKhr, 'KHR')}</td>
-                                        <td className="p-3 text-right font-mono">{formatCurrency(r.bankUsd, 'USD')}</td>
-                                        <td className="p-3 text-right font-mono">{formatCurrency(r.bankKhr, 'KHR')}</td>
-                                        <td className="p-3 text-right font-bold text-indigo-600">{formatCurrency(r.grandTotalKhr, 'KHR')}</td>
+                                    <tr key={r.id} className={`hover:bg-slate-700/50 ${getShopColor(r.shop)}`}>
+                                        <td className="p-3 text-slate-300">{formatInCambodiaTime(r.createdAt)}</td>
+                                        <td className="p-3 text-slate-200">{r.shop}</td><td className="p-3 text-slate-300">{r.staff}</td>
+                                        <td className="p-3 text-right font-mono text-slate-200">{formatCurrency(r.cashUsd, 'USD')}</td>
+                                        <td className="p-3 text-right font-mono text-slate-200">{formatCurrency(r.cashKhr, 'KHR')}</td>
+                                        <td className="p-3 text-right font-mono text-slate-200">{formatCurrency(r.bankUsd, 'USD')}</td>
+                                        <td className="p-3 text-right font-mono text-slate-200">{formatCurrency(r.bankKhr, 'KHR')}</td>
+                                        <td className="p-3 text-right font-bold text-blue-400">{formatCurrency(r.grandTotalKhr, 'KHR')}</td>
                                         <td className="p-3 text-center">
                                             <Button variant="ghost" size="sm" onClick={() => setViewingNote(r.note)} disabled={!r.note}><Icon name="FileText" size={16}/></Button>
                                         </td>
                                         <td className="p-3 flex gap-1 justify-center">
                                             <Button variant="ghost" size="sm" onClick={() => setEditingReport(r)} disabled={!canEditDelete}><Icon name="PenSquare" size={16}/></Button>
-                                            <Button variant="ghost" size="sm" onClick={() => setDeletingReport(r)} disabled={!canEditDelete} className="text-red-600 hover:bg-red-100"><Icon name="Trash2" size={16}/></Button>
+                                            <Button variant="ghost" size="sm" onClick={() => setDeletingReport(r)} disabled={!canEditDelete} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2" size={16}/></Button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
-                            <tfoot className="bg-slate-200 font-bold">
+                            <tfoot className="bg-slate-800 font-semibold text-slate-200">
                                 <tr>
                                     <td colSpan={10} className="p-3">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm">Rows per page:</span>
-                                                <select value={rowsPerPage} onChange={e => setRowsPerPage(e.target.value === 'All' ? 'All' : Number(e.target.value))} className="p-1 border rounded-md">
+                                                <select value={rowsPerPage} onChange={e => setRowsPerPage(e.target.value === 'All' ? 'All' : Number(e.target.value))} className="p-1 border rounded-md bg-slate-700 border-slate-600">
                                                     <option value={30}>30</option>
                                                     <option value={50}>50</option>
                                                     <option value={100}>100</option>
@@ -776,8 +773,8 @@
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm">Page {currentPage} of {totalPages}</span>
-                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>&lt;</Button>
-                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>&gt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} variant="secondary">&lt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} variant="secondary">&gt;</Button>
                                             </div>
                                         </div>
                                     </td>
@@ -865,28 +862,28 @@
                             <FormSelect label="Staff" name="staff" value={formData.staff} onChange={handleChange} options={staffList.map(s => ({value: s.name, label: s.name}))} />
                             <FormSelect label="Shift" name="shift" value={formData.shift} onChange={handleChange} options={[{value:'Morning', label:'Morning'}, {value:'Afternoon', label:'Afternoon'}, {value:'Night', label:'Night'}]} />
                         </div>
-                        <div className="space-y-4 pt-4 border-t">
+                        <div className="space-y-4 pt-4 border-t border-slate-700">
                             <div>
-                                <h3 className="text-md font-semibold text-slate-600">By Cash</h3>
+                                <h3 className="text-md font-semibold text-slate-300">By Cash</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                                     <LiveFormatInput label="KHR (៛)" name="cashKhr" value={formData.cashKhr} onChange={handleChange} />
                                     <LiveFormatInput label="USD ($)" name="cashUsd" value={formData.cashUsd} onChange={handleChange} />
                                 </div>
                             </div>
                             <div>
-                                <h3 className="text-md font-semibold text-slate-600">By Bank</h3>
+                                <h3 className="text-md font-semibold text-slate-300">By Bank</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                                     <LiveFormatInput label="KHR (៛)" name="bankKhr" value={formData.bankKhr} onChange={handleChange} />
                                     <LiveFormatInput label="USD ($)" name="bankUsd" value={formData.bankUsd} onChange={handleChange} />
                                 </div>
                             </div>
                         </div>
-                        <div className="border-t pt-4 flex justify-between items-center">
-                            <span className="font-bold text-slate-800 text-lg">Sub-Total</span>
-                            <span className="font-extrabold text-indigo-600 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
+                        <div className="border-t border-slate-700 pt-4 flex justify-between items-center">
+                            <span className="font-bold text-slate-100 text-lg">Sub-Total</span>
+                            <span className="font-extrabold text-blue-400 text-2xl">{formatCurrency(grandTotal, 'KHR')}</span>
                         </div>
                         <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
-                        <div className="flex justify-end gap-4 pt-4 border-t">
+                        <div className="flex justify-end gap-4 pt-4 border-t border-slate-700">
                             <Button type="button" variant="secondary" onClick={onClose}>Cancel</Button>
                             <Button type="submit" disabled={isSubmitting} icon={isSubmitting ? "LoaderCircle" : null}>
                                 {isSubmitting ? 'Saving...' : 'Save Changes'}
@@ -1051,7 +1048,7 @@
                     <PageHeader title="Sale Report" subtitle="Aggregated sales data." />
                     <Card>
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold text-gray-700">Sale Report Filters</h2>
+                            <h2 className="text-xl font-bold text-slate-200">Sale Report Filters</h2>
                             <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1073,10 +1070,10 @@
                     </Card>
 
                     <Card>
-                        <h2 className="text-xl font-bold mb-4 text-gray-700">Report Details</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-200">Report Details</h2>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                                <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                     <tr>
                                         <th className="p-3">{isDailyView ? 'Date' : 'No.'}</th>
                                         <th className="p-3">Shop</th>
@@ -1087,30 +1084,30 @@
                                         <th className="p-3 text-right">Net Sale (៛)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="divide-y divide-slate-700">
                                     {aggregatedData.length > 0 ? aggregatedData.map((item, index) => (
-                                        <tr key={item.key} className="border-b hover:bg-gray-50">
-                                            <td className="p-3">{isDailyView ? new Date(item.date).toLocaleDateString('en-GB') : index + 1}</td>
-                                            <td className="p-3 font-semibold text-gray-800">{item.shop}</td>
-                                            <td className="p-3 text-right font-mono">{item.cashKhr.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono">{item.cashUsd.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono">{item.bankKhr.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono">{item.bankUsd.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-bold text-indigo-600">{item.grandTotalKhr.toLocaleString()}</td>
+                                        <tr key={item.key} className="hover:bg-slate-700/50">
+                                            <td className="p-3 text-slate-300">{isDailyView ? new Date(item.date).toLocaleDateString('en-GB') : index + 1}</td>
+                                            <td className="p-3 font-semibold text-slate-100">{item.shop}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{item.cashKhr.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{item.cashUsd.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{item.bankKhr.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{item.bankUsd.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-bold text-blue-400">{item.grandTotalKhr.toLocaleString()}</td>
                                         </tr>
                                     )) : (
-                                        <tr><td colSpan="7" className="text-center p-8 text-gray-500">No sales data for the selected period.</td></tr>
+                                        <tr><td colSpan="7" className="text-center p-8 text-slate-500">No sales data for the selected period.</td></tr>
                                     )}
                                 </tbody>
                                 {aggregatedData.length > 0 && (
-                                    <tfoot className="bg-gray-200 font-bold">
+                                    <tfoot className="bg-slate-800 font-bold text-slate-200">
                                         <tr>
                                             <td colSpan="2" className="p-3 text-right">Sub Total</td>
                                             <td className="p-3 text-right font-mono">{footerTotals.cashKhr.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono">{footerTotals.cashUsd.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono">{footerTotals.bankKhr.toLocaleString()}</td>
                                             <td className="p-3 text-right font-mono">{footerTotals.bankUsd.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono text-indigo-700">{footerTotals.grandTotalKhr.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-blue-400">{footerTotals.grandTotalKhr.toLocaleString()}</td>
                                         </tr>
                                     </tfoot>
                                 )}
@@ -1127,7 +1124,7 @@
              const [activeTab, setActiveTab] = useState('pos');
 
             const TabButton = ({ tabName, label, isActive, onClick }) => (
-                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg ${isActive ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500 hover:bg-slate-100'}`}>
+                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg transition-colors ${isActive ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50'}`}>
                     {label}
                 </button>
             );
@@ -1135,7 +1132,7 @@
             return (
                  <div className="space-y-6">
                     <PageHeader title="Purchase Orders" subtitle="Manage purchase orders, internal transfers, and vendor tracking." />
-                    <div className="border-b border-gray-200 flex space-x-1 sm:space-x-2 flex-wrap">
+                    <div className="border-b border-slate-700 flex space-x-1 sm:space-x-2 flex-wrap">
                         <TabButton tabName="pos" label="Purchase Orders" isActive={activeTab === 'pos'} onClick={setActiveTab} />
                         <TabButton tabName="internal_transfer" label="Internal Transfer" isActive={activeTab === 'internal_transfer'} onClick={setActiveTab} />
                         <TabButton tabName="vendor_tracking" label="Vendor Tracking" isActive={activeTab === 'vendor_tracking'} onClick={setActiveTab} />
@@ -1313,13 +1310,13 @@
             return (
                 <div className="space-y-6">
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{editingPO ? 'Edit Purchase Order' : 'Create Purchase Order'}</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-100 border-b border-slate-700 pb-3">{editingPO ? 'Edit Purchase Order' : 'Create Purchase Order'}</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <FormInput label="PO Date" type="date" name="poDate" value={activeFormData.poDate} onChange={handleFormChange} />
                                 <FormSelect label="Shop" name="shop" value={activeFormData.shop} onChange={handleFormChange} options={availableShops.map(s => ({value: s.name, label: s.name}))} required />
                                 <FormSelect label="Order By" name="orderBy" value={activeFormData.orderBy} onChange={handleFormChange} options={staffList.map(s => ({value: s.name, label: s.name}))} disabled={userData.role !== 'Admin'}/>
-                                <FormInput label="Current GCA (៛)" value={currentGCA.toLocaleString()} disabled readOnly />
+                                <FormInput label="Current GCA (៛)" value={currentGCA.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <SearchableSelect 
@@ -1334,7 +1331,7 @@
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <FormTextarea label="Note" name="note" value={activeFormData.note} onChange={handleFormChange} />
-                               <FormInput label="Sub-Total POs (៛)" value={subTotalPOs.toLocaleString()} disabled readOnly />
+                               <FormInput label="Sub-Total POs (៛)" value={subTotalPOs.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
                             </div>
                             <div className="flex justify-end gap-2">
                                 {editingPO && <Button type="button" variant="secondary" onClick={handleCancelEdit}>Cancel</Button>}
@@ -1401,19 +1398,19 @@
                         name="vendor-search"
                     />
                     {isOpen && (
-                        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-60 overflow-y-auto shadow-lg">
+                        <ul className="absolute z-10 w-full bg-slate-700 border border-slate-600 rounded-md mt-1 max-h-60 overflow-y-auto shadow-lg">
                             {filteredOptions.length > 0 ? (
                                 filteredOptions.map(option => (
                                     <li 
                                         key={option.id} 
-                                        className="px-3 py-2 cursor-pointer hover:bg-indigo-100"
+                                        className="px-3 py-2 cursor-pointer hover:bg-slate-600 text-slate-200"
                                         onClick={() => handleSelect(option.name)}
                                     >
                                         {option.name}
                                     </li>
                                 ))
                             ) : (
-                                <li className="px-3 py-2 text-gray-500">No results found</li>
+                                <li className="px-3 py-2 text-slate-500">No results found</li>
                             )}
                         </ul>
                     )}
@@ -1530,10 +1527,10 @@
             return (
                 <Card>
                     <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold">Purchase Order History</h2>
+                        <h2 className="text-xl font-bold text-slate-100">Purchase Order History</h2>
                         <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4 p-4 bg-gray-50 rounded-lg border">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
                         <FormSelect label="Shop" name="shop" value={filters.shop} onChange={handleFilterChange} options={[{value:'', label:'All Shops'}, ...shops.map(s => ({value: s.name, label: s.name}))]} />
                         <FormSelect label="Vendor" name="vendor" value={filters.vendor} onChange={handleFilterChange} options={[{value: '', label:'All Vendors'}, ...vendors.map(v => ({value: v.name, label: v.name}))]} />
                         <FormSelect label="Status" name="status" value={filters.status} onChange={handleFilterChange} options={[{value:'', label:'All Status'}, {value:'Paid', label:'Paid'}, {value:'Unpaid', label:'Unpaid'}]} />
@@ -1542,7 +1539,7 @@
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
-                            <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                 <tr>
                                     <th className="p-3">PO Date</th><th className="p-3">Shop</th><th className="p-3">Vendor</th>
                                     <th className="p-3">Order By</th>
@@ -1551,34 +1548,34 @@
                                     <th className="p-3 text-center">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="divide-y divide-slate-700">
                                 {paginatedPOs.map(po => {
                                     const subTotal = (po.amountKhr || 0) + ((po.amountUsd || 0) * (appSettings.exchangeRate || 4100));
                                     return (
-                                    <tr key={po.id} className="border-b hover:bg-gray-50" style={po.status === 'Unpaid' ? { backgroundColor: '#E66386' } : {}}>
-                                        <td className="p-3">{formatInCambodiaDateOnly(po.date)}</td>
-                                        <td className="p-3">{po.shop}</td>
-                                        <td className="p-3 font-semibold">{po.vendor}</td>
-                                        <td className="p-3">{po.orderBy}</td>
-                                        <td className="p-3 text-right font-mono">{(po.amountKhr || 0).toLocaleString()}</td>
-                                        <td className="p-3 text-right font-mono">{(po.amountUsd || 0).toLocaleString()}</td>
-                                        <td className="p-3 text-right font-mono font-bold">{subTotal.toLocaleString()}</td>
-                                        <td className="p-3">{po.status}{po.status === 'Paid' && po.paidAt ? ` (${formatInCambodiaTime(po.paidAt)})` : ''}</td>
+                                    <tr key={po.id} className={`hover:bg-slate-700/50 ${po.status === 'Unpaid' ? 'bg-red-900/40' : ''}`}>
+                                        <td className="p-3 text-slate-300">{formatInCambodiaDateOnly(po.date)}</td>
+                                        <td className="p-3 text-slate-200">{po.shop}</td>
+                                        <td className="p-3 font-semibold text-slate-100">{po.vendor}</td>
+                                        <td className="p-3 text-slate-300">{po.orderBy}</td>
+                                        <td className="p-3 text-right font-mono text-slate-300">{(po.amountKhr || 0).toLocaleString()}</td>
+                                        <td className="p-3 text-right font-mono text-slate-300">{(po.amountUsd || 0).toLocaleString()}</td>
+                                        <td className="p-3 text-right font-mono font-bold text-slate-200">{subTotal.toLocaleString()}</td>
+                                        <td className="p-3 text-slate-300">{po.status}{po.status === 'Paid' && po.paidAt ? ` (${formatInCambodiaTime(po.paidAt)})` : ''}</td>
                                         <td className="p-3 flex gap-1 justify-center">
-                                            {(userData.role === 'Admin' || userData.role === 'Management') && po.status === 'Unpaid' && <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(po.id)} className="text-red-600 font-bold">Mark Paid</Button>}
+                                            {(userData.role === 'Admin' || userData.role === 'Management') && po.status === 'Unpaid' && <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(po.id)} className="text-green-400 font-bold">Mark Paid</Button>}
                                             {(userData.role === 'Admin' || userData.role === 'Management') && <Button variant="ghost" size="sm" onClick={() => onEdit(po)}><Icon name="PenSquare"/></Button>}
-                                            {userData.role === 'Admin' && <Button variant="ghost" size="sm" onClick={() => setDeletingPO(po)} className="text-red-500 hover:bg-red-100"><Icon name="Trash2"/></Button>}
+                                            {userData.role === 'Admin' && <Button variant="ghost" size="sm" onClick={() => setDeletingPO(po)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>}
                                         </td>
                                     </tr>
                                 )})}
                             </tbody>
-                             <tfoot className="bg-gray-200 font-bold">
+                             <tfoot className="bg-slate-800 font-bold text-slate-200">
                                 <tr>
                                     <td colSpan="9" className="p-3">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm">Rows per page:</span>
-                                                <select value={rowsPerPage} onChange={e => {setRowsPerPage(Number(e.target.value)); setCurrentPage(1);}} className="p-1 border rounded-md bg-white">
+                                                <select value={rowsPerPage} onChange={e => {setRowsPerPage(Number(e.target.value)); setCurrentPage(1);}} className="p-1 border rounded-md bg-slate-700 border-slate-600">
                                                     <option value={15}>15</option>
                                                     <option value={30}>30</option>
                                                     <option value={45}>45</option>
@@ -1587,8 +1584,8 @@
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <span className="text-sm">Page {currentPage} of {totalPages}</span>
-                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>&lt;</Button>
-                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>&gt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} variant="secondary">&lt;</Button>
+                                                <Button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} variant="secondary">&gt;</Button>
                                             </div>
                                         </div>
                                     </td>
@@ -1741,7 +1738,7 @@
             return (
                 <div className="space-y-6">
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">New Internal Transfer</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-100 border-b border-slate-700 pb-3">New Internal Transfer</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
@@ -1752,7 +1749,7 @@
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <LiveFormatInput label="Amount (USD)" name="amountUsd" value={formData.amountUsd} onChange={handleChange} />
                                 <LiveFormatInput label="Amount (KHR)" name="amountKhr" value={formData.amountKhr} onChange={handleChange} />
-                                <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly />
+                                <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
                             </div>
                             <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
                             <div className="flex justify-end">
@@ -1764,17 +1761,17 @@
                     </Card>
                     <Card>
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold">Transfer History</h2>
+                            <h2 className="text-xl font-bold text-slate-100">Transfer History</h2>
                             <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-gray-50 rounded-lg border">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
                             <FormSelect label="From Shop" name="fromShop" value={filters.fromShop} onChange={(e) => setFilters(p => ({...p, fromShop: e.target.value}))} options={[{value: '', label: 'All Shops'}, ...shops.map(s => ({value: s.name, label: s.name}))]} />
                             <FormInput label="Start Date" type="date" name="startDate" value={filters.startDate} onChange={(e) => setFilters(p => ({...p, startDate: e.target.value}))} />
                             <FormInput label="End Date" type="date" name="endDate" value={filters.endDate} onChange={(e) => setFilters(p => ({...p, endDate: e.target.value}))} />
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                                <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                     <tr>
                                         <th className="p-3">Date</th><th className="p-3">PO No.</th><th className="p-3">From</th><th className="p-3">To</th>
                                         <th className="p-3 text-right">Amount USD</th><th className="p-3 text-right">Amount KHR</th>
@@ -1782,26 +1779,26 @@
                                         <th className="p-3 text-center">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="divide-y divide-slate-700">
                                     {filteredTransfers.map(t => (
-                                        <tr key={t.id} className="border-b hover:bg-gray-50">
-                                            <td className="p-3">{formatInCambodiaDateOnly(t.date)}</td>
-                                            <td className="p-3">{t.poNo}</td>
-                                            <td className="p-3">{t.fromShop}</td>
-                                            <td className="p-3">{t.toShop}</td>
-                                            <td className="p-3 text-right font-mono">{(t.amountUsd || 0).toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono">{(t.amountKhr || 0).toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono font-bold">{(t.totalAmount || 0).toLocaleString()}</td>
-                                            <td className="p-3">{t.status}{t.status === 'Paid' && t.paidAt ? ` (${formatInCambodiaTime(t.paidAt)})` : ''}</td>
+                                        <tr key={t.id} className="hover:bg-slate-700/50">
+                                            <td className="p-3 text-slate-300">{formatInCambodiaDateOnly(t.date)}</td>
+                                            <td className="p-3 text-slate-300">{t.poNo}</td>
+                                            <td className="p-3 text-slate-200">{t.fromShop}</td>
+                                            <td className="p-3 text-slate-200">{t.toShop}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{(t.amountUsd || 0).toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{(t.amountKhr || 0).toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono font-bold text-slate-200">{(t.totalAmount || 0).toLocaleString()}</td>
+                                            <td className="p-3 text-slate-300">{t.status}{t.status === 'Paid' && t.paidAt ? ` (${formatInCambodiaTime(t.paidAt)})` : ''}</td>
                                             <td className="p-3 flex gap-1 justify-center">
                                                 {(userData.role === 'Admin' || userData.role === 'Management') && t.status !== 'Paid' && <Button variant="ghost" size="sm" onClick={() => handleMarkPaid(t.id)}><Icon name="CheckCircle"/></Button>}
                                                 {(userData.role === 'Admin' || userData.role === 'Management') && <Button variant="ghost" size="sm" onClick={() => setEditingTransfer(t)}><Icon name="PenSquare"/></Button>}
-                                                {(userData.role === 'Admin' || (userData.role === 'Management' && t.status !== 'Paid')) && <Button variant="ghost" onClick={() => setDeletingTransfer(t)} className="text-red-500 hover:bg-red-100"><Icon name="Trash2"/></Button>}
+                                                {(userData.role === 'Admin' || (userData.role === 'Management' && t.status !== 'Paid')) && <Button variant="ghost" onClick={() => setDeletingTransfer(t)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>}
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
-                                <tfoot className="bg-gray-200 font-bold">
+                                <tfoot className="bg-slate-800 font-bold text-slate-200">
                                     <tr>
                                         <td colSpan={4} className="p-3 text-right">Totals</td>
                                         <td className="p-3 text-right font-mono">{historyFooterTotals.usd.toLocaleString()}</td>
@@ -1889,10 +1886,10 @@
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <LiveFormatInput label="Amount (USD)" name="amountUsd" value={formData.amountUsd} onChange={handleChange} />
                             <LiveFormatInput label="Amount (KHR)" name="amountKhr" value={formData.amountKhr} onChange={handleChange} />
-                            <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly />
+                            <FormInput label="Total Amount (៛)" value={totalAmount.toLocaleString()} disabled readOnly className="bg-slate-700/50" />
                         </div>
                         <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
-                        <div className="flex justify-end gap-4 pt-4 border-t">
+                        <div className="flex justify-end gap-4 pt-4 border-t border-slate-700">
                             <Button type="button" variant="secondary" onClick={onClose}>Cancel</Button>
                             <Button type="submit" disabled={isSubmitting} icon={isSubmitting ? "LoaderCircle" : null}>
                                 {isSubmitting ? 'Saving...' : 'Save Changes'}
@@ -1994,7 +1991,7 @@
                 <div className="space-y-6">
                     <Card>
                         <div className="flex justify-between items-center mb-4">
-                             <h2 className="text-xl font-bold">Vendor Report Filters</h2>
+                             <h2 className="text-xl font-bold text-slate-100">Vendor Report Filters</h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <FormSelect label="Shop" name="shop" value={filters.shop} onChange={handleFilterChange} options={[{value: '', label: 'All Shops'}, ...shops.map(s => ({value: s.name, label: s.name}))]} />
@@ -2006,22 +2003,22 @@
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <Card>
-                            <h3 className="text-lg font-bold mb-4">Top 10 Purchased Vendors</h3>
+                            <h3 className="text-lg font-bold mb-4 text-slate-100">Top 10 Purchased Vendors</h3>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
-                                    <thead className="bg-gray-100">
+                                    <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                         <tr>
                                             <th className="p-2 text-left">Rank</th>
                                             <th className="p-2 text-left">Vendor</th>
                                             <th className="p-2 text-right">Total Purchase (៛)</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className="divide-y divide-slate-700">
                                         {vendorAnalysis.top10.map((v, i) => (
-                                            <tr key={v.id} className="border-b">
-                                                <td className="p-2 font-semibold">{i + 1}</td>
-                                                <td className="p-2">{v.name}</td>
-                                                <td className="p-2 text-right font-mono">{v.totalValue.toLocaleString(undefined, {minimumFractionDigits: 0})}</td>
+                                            <tr key={v.id}>
+                                                <td className="p-2 font-semibold text-slate-300">{i + 1}</td>
+                                                <td className="p-2 text-slate-200">{v.name}</td>
+                                                <td className="p-2 text-right font-mono text-slate-200">{v.totalValue.toLocaleString(undefined, {minimumFractionDigits: 0})}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -2029,20 +2026,20 @@
                             </div>
                         </Card>
                         <Card>
-                            <h3 className="text-lg font-bold mb-4">Rarely / Never Purchased Vendors</h3>
+                            <h3 className="text-lg font-bold mb-4 text-slate-100">Rarely / Never Purchased Vendors</h3>
                              <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
-                                    <thead className="bg-gray-100">
+                                    <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                         <tr>
                                             <th className="p-2 text-left">Vendor</th>
                                             <th className="p-2 text-center">No. of Purchases</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className="divide-y divide-slate-700">
                                         {vendorAnalysis.rarelyPurchased.map(v => (
-                                            <tr key={v.id} className="border-b">
-                                                <td className="p-2">{v.name}</td>
-                                                <td className="p-2 text-center font-mono">{v.purchaseCount}</td>
+                                            <tr key={v.id}>
+                                                <td className="p-2 text-slate-200">{v.name}</td>
+                                                <td className="p-2 text-center font-mono text-slate-300">{v.purchaseCount}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -2052,10 +2049,10 @@
                     </div>
 
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">Purchase History Summary</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-100">Purchase History Summary</h2>
                         <div className="overflow-x-auto">
                              <table className="w-full text-sm text-left">
-                                <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                     <tr>
                                         <th className="p-3">Month (MM-YY)</th>
                                         <th className="p-3">Shop Name</th>
@@ -2066,22 +2063,22 @@
                                         <th className="p-3 text-right">Total (KHR)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="divide-y divide-slate-700">
                                     {groupedData.map((group) => {
                                         const total = group.totalKhr + (group.totalUsd * (appSettings.exchangeRate || 4100));
                                         return (
-                                        <tr key={group.key} className="border-b hover:bg-gray-50">
-                                            <td className="p-3">{group.month}</td>
-                                            <td className="p-3">{group.shop}</td>
-                                            <td className="p-3 font-semibold">{group.vendor}</td>
-                                            <td className="p-3 text-center">{group.count}</td>
-                                            <td className="p-3 text-right font-mono">{group.totalKhr.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono">{group.totalUsd.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-mono font-bold">{total.toLocaleString()}</td>
+                                        <tr key={group.key} className="hover:bg-slate-700/50">
+                                            <td className="p-3 text-slate-300">{group.month}</td>
+                                            <td className="p-3 text-slate-200">{group.shop}</td>
+                                            <td className="p-3 font-semibold text-slate-100">{group.vendor}</td>
+                                            <td className="p-3 text-center text-slate-300">{group.count}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{group.totalKhr.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono text-slate-300">{group.totalUsd.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-mono font-bold text-slate-200">{total.toLocaleString()}</td>
                                         </tr>
                                     )})}
                                 </tbody>
-                                <tfoot className="bg-gray-200 font-bold">
+                                <tfoot className="bg-slate-800 font-bold text-slate-200">
                                     <tr>
                                         <td colSpan="4" className="p-3 text-right">Sub-Totals</td>
                                         <td className="p-3 text-right font-mono">{footerTotals.khr.toLocaleString()}</td>
@@ -2135,12 +2132,12 @@
             return (
                 <Card>
                     <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold text-slate-700">Vendor Management</h2>
+                        <h2 className="text-xl font-bold text-slate-100">Vendor Management</h2>
                         <Button onClick={() => openModal()} icon="Plus">New Vendor</Button>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
-                            <thead className="bg-slate-100 text-xs text-gray-700 uppercase">
+                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                 <tr>
                                     <th className="p-3">Vendor Name</th>
                                     <th className="p-3">Contact Person</th>
@@ -2151,10 +2148,10 @@
                                     <th className="p-3 text-center">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="text-sm text-gray-600">
+                            <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
                                 {vendors.map(vendor => (
-                                    <tr key={vendor.id} className="border-b hover:bg-slate-100">
-                                        <td className="p-3 font-semibold">{vendor.name}</td>
+                                    <tr key={vendor.id} className="hover:bg-slate-700/50">
+                                        <td className="p-3 font-semibold text-slate-100">{vendor.name}</td>
                                         <td className="p-3">{vendor.contactPerson}</td>
                                         <td className="p-3">{vendor.phone}</td>
                                         <td className="p-3">{vendor.bankName}</td>
@@ -2162,7 +2159,7 @@
                                         <td className="p-3">{vendor.accountUsd}</td>
                                         <td className="p-3 flex gap-1 justify-center">
                                             <Button variant="ghost" onClick={() => openModal(vendor)}><Icon name="PenSquare"/></Button>
-                                            <Button variant="ghost" onClick={() => setDeletingVendor(vendor)} className="text-red-500 hover:bg-red-100"><Icon name="Trash2"/></Button>
+                                            <Button variant="ghost" onClick={() => setDeletingVendor(vendor)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>
                                         </td>
                                     </tr>
                                 ))}
@@ -2224,7 +2221,7 @@
                         <FormInput label="Bank Name" name="bankName" value={formData.bankName} onChange={handleChange} />
                         <FormInput label="Account KHR" name="accountKhr" value={formData.accountKhr} onChange={handleChange} />
                         <FormInput label="Account USD" name="accountUsd" value={formData.accountUsd} onChange={handleChange} />
-                        <div className="flex justify-end gap-4 pt-4 border-t">
+                        <div className="flex justify-end gap-4 pt-4 border-t border-slate-700">
                             <Button type="button" onClick={onClose} variant="secondary">Cancel</Button>
                             <Button type="submit" disabled={isSubmitting} className="w-24" icon={isSubmitting ? "LoaderCircle" : null}>{isSubmitting ? '' : "Save"}</Button>
                         </div>
@@ -2234,7 +2231,8 @@
         };
         // --- END: Purchase Order Page ---
 
-        // --- START: Expense Report Page ---
+        
+             // --- START: Expense Report Page ---
         const ExpenseReportPage = () => {
             const { userData, businessExpenses, familyExpenses, shops, businessCategories, familyCategories, appSettings } = useData();
             const { showNotification } = useNotification();
@@ -2244,7 +2242,7 @@
             const [deletingExpense, setDeletingExpense] = useState(null);
             const [viewingExpense, setViewingExpense] = useState(null);
             const [isDeleting, setIsDeleting] = useState(false);
-            const [filters, setFilters] = useState({ shop: 'all', month: '' });
+            const [filters, setFilters] = useState({ shop: 'all', month: '', category: 'all', expenseType: 'all' });
             const isMounted = useRef(true);
 
             useEffect(() => {
@@ -2256,6 +2254,12 @@
                 const { name, value } = e.target;
                 setFilters(prev => ({ ...prev, [name]: value }));
             };
+            
+            const allCategories = useMemo(() => {
+                const business = businessCategories.map(c => c.name);
+                const family = familyCategories.map(c => c.name);
+                return [...new Set([...business, ...family])];
+            }, [businessCategories, familyCategories]);
 
             const filteredExpenses = useMemo(() => {
                 let combinedList = [
@@ -2265,14 +2269,17 @@
 
                 return combinedList.filter(exp => {
                     const shopMatch = filters.shop === 'all' || exp.type !== 'Business' || exp.shop === filters.shop;
-                    if (!filters.month) return shopMatch;
+                    const categoryMatch = filters.category === 'all' || exp.category === filters.category;
+                    const typeMatch = filters.expenseType === 'all' || exp.type === filters.expenseType;
+                    
+                    if (!filters.month) return shopMatch && categoryMatch && typeMatch;
                     
                     if (!exp.date) return false;
                     const [year, month] = filters.month.split('-');
                     const expDate = exp.date.toDate();
                     const monthMatch = expDate.getFullYear() === parseInt(year) && (expDate.getMonth() + 1) === parseInt(month);
                     
-                    return shopMatch && monthMatch;
+                    return shopMatch && categoryMatch && monthMatch && typeMatch;
                 }).sort((a, b) => (b.date?.toDate()?.getTime() || 0) - (a.date?.toDate()?.getTime() || 0));
             }, [businessExpenses, familyExpenses, userData, filters]);
 
@@ -2333,14 +2340,14 @@
                         <div className="space-y-4">
                             {details.map(detail => (
                                 <div key={detail.label} className={`flex flex-col sm:flex-row sm:items-center ${detail.isNote ? 'items-start' : ''}`}>
-                                    <p className="w-full sm:w-1/3 text-sm font-semibold text-gray-600">{detail.label}</p>
-                                    <p className={`w-full sm:w-2/3 text-gray-800 ${detail.isAmount ? 'font-mono' : ''} ${detail.isTotal ? 'font-bold text-lg text-red-600' : ''} ${detail.isNote ? 'whitespace-pre-wrap bg-gray-100 p-2 rounded-md mt-1 sm:mt-0' : ''}`}>
+                                    <p className="w-full sm:w-1/3 text-sm font-semibold text-slate-400">{detail.label}</p>
+                                    <p className={`w-full sm:w-2/3 text-slate-200 ${detail.isAmount ? 'font-mono' : ''} ${detail.isTotal ? 'font-bold text-lg text-red-500' : ''} ${detail.isNote ? 'whitespace-pre-wrap bg-slate-700/50 p-2 rounded-md mt-1 sm:mt-0' : ''}`}>
                                         {detail.value}
                                     </p>
                                 </div>
                             ))}
                         </div>
-                        <div className="flex justify-end gap-4 pt-6 mt-6 border-t">
+                        <div className="flex justify-end gap-4 pt-6 mt-6 border-t border-slate-700">
                             <Button type="button" onClick={onClose} variant="secondary">Close</Button>
                             <Button type="button" onClick={onEdit} icon="PenSquare">Edit</Button>
                         </div>
@@ -2420,7 +2427,7 @@
 
                 return (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{expense ? 'Edit' : 'Add New'} Expense</h2>
+                        <h2 className="text-xl font-bold mb-4 text-slate-100 border-b border-slate-700 pb-3">{expense ? 'Edit' : 'Add New'} Expense</h2>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                             <FormSelect label="Expense Type" name="expenseType" value={formData.expenseType} onChange={handleChange} options={expenseTypeOptions} />
                             <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
@@ -2436,9 +2443,9 @@
                             <LiveFormatInput label="Amount (KHR)" name="amountKhr" value={formData.amountKhr} onChange={handleChange} />
                             <LiveFormatInput label="Amount (USD)" name="amountUsd" value={formData.amountUsd} onChange={handleChange} />
                             
-                            <div className="p-2 bg-slate-100 rounded-md">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Sub-Total (KHR)</label>
-                                <p className="font-bold text-lg text-red-600">{formatCurrency(subTotalKhr, 'KHR')}</p>
+                            <div className="p-2 bg-slate-700/50 rounded-md">
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Sub-Total (KHR)</label>
+                                <p className="font-bold text-lg text-red-500">{formatCurrency(subTotalKhr, 'KHR')}</p>
                             </div>
                             
                             <div className="lg:col-span-4">
@@ -2462,27 +2469,48 @@
                     
                     <Card className="mt-8">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold text-slate-700">Expense History</h2>
+                            <h2 className="text-xl font-bold text-slate-100">Expense History</h2>
                             <Button onClick={handleExport} variant="secondary" icon="Download">Export to Excel</Button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-slate-50 rounded-lg">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
                             <FormSelect label="Filter by Shop" name="shop" value={filters.shop} onChange={handleFilterChange} options={[{ value: 'all', label: 'All Shops' }, ...shops.map(s => ({ value: s.name, label: s.name }))]} />
                             <FormInput label="Filter by Month" type="month" name="month" value={filters.month} onChange={handleFilterChange} />
+                            <FormSelect 
+                                label="Filter by Category" 
+                                name="category" 
+                                value={filters.category} 
+                                onChange={handleFilterChange} 
+                                options={[
+                                    { value: 'all', label: 'All Categories' }, 
+                                    ...allCategories.map(c => ({ value: c, label: c }))
+                                ]} 
+                            />
+                            <FormSelect 
+                                label="Filter by Type" 
+                                name="expenseType" 
+                                value={filters.expenseType} 
+                                onChange={handleFilterChange} 
+                                options={[
+                                    { value: 'all', label: 'All Types' }, 
+                                    { value: 'Business', label: 'Business' },
+                                    { value: 'Family', label: 'Family' }
+                                ]} 
+                            />
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                                <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+                                <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                     <tr>
                                         <th className="p-3">Date</th><th className="p-3">Type</th><th className="p-3">Shop/Paid By</th>
                                         <th className="p-3">Category</th><th className="p-3 text-right">Total (KHR)</th>
                                         <th className="p-3">Note</th><th className="p-3 text-center">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="text-sm text-gray-600">
+                                <tbody className="divide-y divide-slate-700 text-sm text-slate-300">
                                     {filteredExpenses.map(exp => (
-                                        <tr key={exp.id} className="border-b hover:bg-gray-50">
+                                        <tr key={exp.id} className="hover:bg-slate-700/50">
                                             <td className="p-3">{formatInCambodiaDateOnly(exp.date)}</td>
-                                            <td className="p-3"><span className={`px-2 py-1 text-xs rounded-full ${exp.type === 'Business' ? 'bg-sky-100 text-sky-800' : 'bg-purple-100 text-purple-800'}`}>{exp.type}</span></td>
+                                            <td className="p-3"><span className={`px-2 py-1 text-xs rounded-full ${exp.type === 'Business' ? 'bg-sky-900/50 text-sky-400' : 'bg-purple-900/50 text-purple-400'}`}>{exp.type}</span></td>
                                             <td className="p-3">{exp.shop || exp.paidBy || 'N/A'}</td>
                                             <td className="p-3">{exp.category}</td>
                                             <td className="p-3 text-right font-mono">{exp.totalAmountKhr?.toLocaleString()}</td>
@@ -2490,7 +2518,7 @@
                                             <td className="p-3 flex gap-1 justify-center">
                                                 <Button variant="ghost" onClick={() => setViewingExpense(exp)}><Icon name="Eye"/></Button>
                                                 <Button variant="ghost" onClick={() => setEditingExpense(exp)}><Icon name="PenSquare"/></Button>
-                                                <Button variant="ghost" onClick={() => setDeletingExpense(exp)} className="text-red-500 hover:bg-red-100"><Icon name="Trash2"/></Button>
+                                                <Button variant="ghost" onClick={() => setDeletingExpense(exp)} className="text-red-500 hover:bg-red-800/50"><Icon name="Trash2"/></Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -2503,8 +2531,9 @@
                 </div>
             );
         };
-        // --- END: Expense Report Page ---
+        // --- END: Expense Report Page ---  
 
+        
         // --- START: CashFlow Report Page ---
         const CashFlowReportPage = () => {
             const [activeTab, setActiveTab] = useState('shareholderNet');
@@ -2523,7 +2552,11 @@
                 if (!printRef.current || !isMounted.current) return;
                 setIsCapturing(true);
                 try {
-                    const canvas = await html2canvas(printRef.current, { useCORS: true, scale: 2 });
+                    const canvas = await html2canvas(printRef.current, { 
+                        useCORS: true, 
+                        scale: 2,
+                        backgroundColor: '#0f172a' // Set background for capture
+                    });
                     const image = canvas.toDataURL("image/png", 1.0);
                     const link = document.createElement('a');
                     link.href = image;
@@ -2540,7 +2573,7 @@
             }, [filters.month, showNotification]);
 
             const TabButton = ({ tabName, label, isActive, onClick }) => (
-                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg ${isActive ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500 hover:bg-slate-100'}`}>
+                <button onClick={() => onClick(tabName)} className={`px-4 py-2 text-sm font-semibold rounded-t-lg transition-colors ${isActive ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50'}`}>
                     {label}
                 </button>
             );
@@ -2552,7 +2585,7 @@
                             {isCapturing ? 'Capturing...' : 'Download as Image'}
                         </Button>
                     </PageHeader>
-                    <div className="border-b border-gray-200 flex space-x-1 sm:space-x-2 flex-wrap">
+                    <div className="border-b border-slate-700 flex space-x-1 sm:space-x-2 flex-wrap">
                         <TabButton tabName="shareholderNet" label="Shareholder NET" isActive={activeTab === 'shareholderNet'} onClick={setActiveTab} />
                         <TabButton tabName="cashflowHistory" label="CashFlow History" isActive={activeTab === 'cashflowHistory'} onClick={setActiveTab} />
                         <TabButton tabName="iitPayment" label="IIT Payment Report" isActive={activeTab === 'iitPayment'} onClick={setActiveTab} />
@@ -2562,7 +2595,7 @@
                         <FormInput label="Select Month" type="month" name="month" value={filters.month} onChange={(e) => setFilters({ month: e.target.value })} />
                     </Card>
                     
-                    <div ref={printRef} className="bg-white p-4 rounded-lg space-y-8">
+                    <div ref={printRef} className="bg-slate-900 p-4 rounded-lg space-y-8">
                         {activeTab === 'shareholderNet' && <ShareholderNetTab filters={filters} />}
                         {activeTab === 'cashflowHistory' && <CashflowHistoryTab filters={filters} />}
                         {activeTab === 'iitPayment' && <IitPaymentTab filters={filters} />}
@@ -2596,9 +2629,11 @@
             }, [filters.month, reports, businessExpenses, familyExpenses, shops, purchaseOrders, internalTransfers, appSettings]);
         };
 
+       // =================================================================================
+        // #region SHAREHOLDER NET TAB
+        // =================================================================================
         const ShareholderNetTab = ({ filters }) => {
             const data = useMonthlyData(filters);
-
             const { shareholderData, totals } = useMemo(() => {
                 const shareholderData = {};
                 const allShareholders = [...new Set(data.shops.flatMap(s => (s.shareholders || []).map(sh => sh.name)))];
@@ -2618,12 +2653,14 @@
                     const currentGCA = openingGCA + salesContributionAllTime - totalPOsAllTime - transfersInAllTime + transfersOutAllTime;
 
                     const netSaleForMonth = data.filteredReports.filter(cd => cd.shop === shop.name).reduce((sum, cd) => sum + (cd.grandTotalKhr || 0), 0);
+                    const bizExpenseForMonth = data.filteredBusinessExpenses.filter(e => e.shop === shop.name).reduce((sum, e) => sum + (e.totalAmountKhr || 0), 0);
                     const netProfitForMonth = netSaleForMonth * (saleMargin / 100);
+                    const totalNetIncomeForMonth = netProfitForMonth - bizExpenseForMonth;
                     
                     (shop.shareholders || []).forEach(sh => {
                         if(shareholderData[sh.name]) {
                             shareholderData[sh.name].totalGCA += currentGCA * (sh.percentage / 100);
-                            shareholderData[sh.name].totalNetIncome += netProfitForMonth * (sh.percentage / 100);
+                            shareholderData[sh.name].totalNetIncome += totalNetIncomeForMonth * (sh.percentage / 100);
                         }
                     });
                 });
@@ -2654,10 +2691,10 @@
 
             return (
                 <Card>
-                    <h3 className="text-lg font-bold mb-4">Shareholder NET</h3>
+                    <h3 className="text-lg font-bold mb-4 text-slate-100">Shareholder NET</h3>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
-                            <thead className="bg-gray-100">
+                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                 <tr>
                                     <th className="p-2 text-left">No.</th><th className="p-2 text-left">Shareholder</th>
                                     <th className="p-2 text-right">Total GCA</th><th className="p-2 text-right">Total Net-Income</th>
@@ -2665,19 +2702,19 @@
                                     <th className="p-2 text-right">Total COH</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="divide-y divide-slate-700">
                                 {Object.entries(shareholderData).map(([name, d], index) => (
-                                    <tr key={name} className="border-b">
-                                        <td className="p-2">{index + 1}</td><td className="p-2 font-semibold">{name}</td>
-                                        <td className="p-2 text-right font-mono">{d.totalGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono">{d.totalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono text-red-600">{d.familyExpense.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono font-bold">{d.finalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono font-bold text-indigo-600">{d.totalCOH.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                    <tr key={name}>
+                                        <td className="p-2 text-slate-300">{index + 1}</td><td className="p-2 font-semibold text-slate-100">{name}</td>
+                                        <td className="p-2 text-right font-mono text-slate-300">{d.totalGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono text-slate-300">{d.totalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono text-red-400">{d.familyExpense.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono font-bold text-slate-200">{d.finalNetIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono font-bold text-blue-400">{d.totalCOH.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                                     </tr>
                                 ))}
                             </tbody>
-                            <tfoot className="bg-gray-200 font-bold">
+                            <tfoot className="bg-slate-800 font-bold text-slate-200">
                                 <tr>
                                     <td colSpan="2" className="p-2 text-right">Sub-Total (KHR)</td>
                                     <td className="p-2 text-right font-mono">{totals.totalGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
@@ -2692,10 +2729,13 @@
                 </Card>
             );
         };
+        // #endregion
 
+        // =================================================================================
+        // #region CASHFLOW HISTORY TAB
+        // =================================================================================
         const CashflowHistoryTab = ({ filters }) => {
             const data = useMonthlyData(filters);
-
             const { shopCalculations, totals } = useMemo(() => {
                 const shopCalculations = data.shops.map(shop => {
                     const openingGCA = shop.gca || 0;
@@ -2718,23 +2758,19 @@
 
                     return { name: shop.name, currentGCA, netSale: netSaleForMonth, netProfit: netProfitForMonth, totalPO: totalPOForMonth, totalTransIn: totalTransInForMonth, totalTransOut: totalTransOutForMonth, totalBizExpense: bizExpenseForMonth, totalNetIncome: totalNetIncomeForMonth };
                 });
-
                 const totals = shopCalculations.reduce((acc, shop) => {
-                    Object.keys(shop).forEach(key => {
-                        if (key !== 'name') acc[key] = (acc[key] || 0) + shop[key];
-                    });
+                    Object.keys(shop).forEach(key => { if (key !== 'name') acc[key] = (acc[key] || 0) + shop[key]; });
                     return acc;
                 }, {});
-
                 return { shopCalculations, totals };
             }, [data]);
 
             return (
                 <Card>
-                    <h3 className="text-lg font-bold mb-4">CashFlow History</h3>
+                    <h3 className="text-lg font-bold mb-4 text-slate-100">CashFlow History</h3>
                     <div className="overflow-x-auto">
                        <table className="w-full text-sm">
-                             <thead className="bg-gray-100">
+                             <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                 <tr>
                                     <th className="p-2 text-left">No.</th><th className="p-2 text-left">Shop</th>
                                     <th className="p-2 text-right">Current GCA (៛)</th><th className="p-2 text-right">Net Sale</th>
@@ -2743,22 +2779,23 @@
                                     <th className="p-2 text-right">Total Biz Expense</th><th className="p-2 text-right">Total Net Income</th>
                                 </tr>
                              </thead>
-                             <tbody>
+                             <tbody className="divide-y divide-slate-700">
                                 {shopCalculations.map((shop, index) => (
-                                    <tr key={shop.name} className="border-b">
-                                        <td className="p-2">{index+1}</td><td className="p-2 font-semibold">{shop.name}</td>
-                                        <td className="p-2 text-right font-mono">{shop.currentGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono">{shop.netSale.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono">{shop.netProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                                        <td className="p-2 text-right font-mono">{shop.totalPO.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono">{shop.totalTransIn.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono">{shop.totalTransOut.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono">{shop.totalBizExpense.toLocaleString()}</td>
-                                        <td className="p-2 text-right font-mono font-bold">{shop.totalNetIncome.toLocaleString()}</td>
+                                    <tr key={shop.name}>
+                                        <td className="p-2 text-slate-300">{index+1}</td>
+                                        <td className="p-2 font-semibold text-slate-100">{shop.name}</td>
+                                        <td className="p-2 text-right font-mono text-slate-300">{shop.currentGCA.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono text-slate-300">{shop.netSale.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono text-green-400">{shop.netProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                        <td className="p-2 text-right font-mono text-red-400">{shop.totalPO.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono text-slate-300">{shop.totalTransIn.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono text-slate-300">{shop.totalTransOut.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono text-red-400">{shop.totalBizExpense.toLocaleString()}</td>
+                                        <td className="p-2 text-right font-mono font-bold text-blue-400 bg-blue-900/30">{shop.totalNetIncome.toLocaleString()}</td>
                                     </tr>
                                 ))}
                              </tbody>
-                             <tfoot className="bg-gray-200 font-bold">
+                             <tfoot className="bg-slate-800 font-bold text-slate-200">
                                 <tr>
                                     <td colSpan="2" className="p-2 text-right">Sub-Totals</td>
                                     <td className="p-2 text-right font-mono">{totals.currentGCA?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
@@ -2768,7 +2805,7 @@
                                     <td className="p-2 text-right font-mono">{totals.totalTransIn?.toLocaleString()}</td>
                                     <td className="p-2 text-right font-mono">{totals.totalTransOut?.toLocaleString()}</td>
                                     <td className="p-2 text-right font-mono">{totals.totalBizExpense?.toLocaleString()}</td>
-                                    <td className="p-2 text-right font-mono">{totals.totalNetIncome?.toLocaleString()}</td>
+                                    <td className="p-2 text-right font-mono text-blue-400">{totals.totalNetIncome?.toLocaleString()}</td>
                                 </tr>
                              </tfoot>
                         </table>
@@ -2776,12 +2813,23 @@
                 </Card>
             );
         };
+        // #endregion
 
-        const IitPaymentTab = ({ filters }) => {
+      // =================================================================================
+        // #region IIT PAYMENT TAB
+        // =================================================================================
+        const IitPaymentTab = ({ filters, isCapturing }) => {
             const data = useMonthlyData(filters);
+            const {shops} = useData();
+            const [payeeFilter, setPayeeFilter] = useState('All');
 
             const iitPaymentData = useMemo(() => {
-                return Object.values(data.filteredInternalTransfers.reduce((acc, transfer) => {
+                let filteredTransfers = data.filteredInternalTransfers;
+                if (payeeFilter !== 'All') {
+                    filteredTransfers = filteredTransfers.filter(t => t.toShop === payeeFilter);
+                }
+
+                return Object.values(filteredTransfers.reduce((acc, transfer) => {
                     const key = `${transfer.toShop}-${transfer.fromShop}`;
                     if (!acc[key]) {
                         acc[key] = { payee: transfer.toShop, receiver: transfer.fromShop, totalAmount: 0 };
@@ -2789,65 +2837,172 @@
                     acc[key].totalAmount += transfer.totalAmount || 0;
                     return acc;
                 }, {}));
-            }, [data]);
+            }, [data, payeeFilter]);
+
+            const subtotal = useMemo(() => {
+                return iitPaymentData.reduce((sum, item) => sum + item.totalAmount, 0);
+            }, [iitPaymentData]);
 
             return (
                 <Card>
-                    <h3 className="text-lg font-bold mb-4">IIT Payment Report</h3>
+                    <h3 className="text-lg font-bold mb-4 text-slate-100">IIT Payment Report</h3>
+                     <div className="mb-4">
+                        {isCapturing ? (
+                            <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-1.5">Filter by Shop Payee</label>
+                                <div className="block w-full px-3 py-2 border border-slate-600 bg-slate-800 rounded-md shadow-sm sm:text-sm">
+                                    {payeeFilter}
+                                </div>
+                            </div>
+                        ) : (
+                            <FormSelect label="Filter by Shop Payee" name="payee" value={payeeFilter} onChange={(e) => setPayeeFilter(e.target.value)} options={[{value: 'All', label: 'All Shops'}, ...shops.map(s => ({value: s.name, label: s.name}))]} />
+                        )}
+                    </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
-                            <thead className="bg-gray-100">
+                            <thead className="bg-slate-900 text-xs text-slate-400 uppercase">
                                 <tr>
                                     <th className="p-2 text-left">No.</th><th className="p-2 text-left">Shop Payee</th>
                                     <th className="p-2 text-left">Shop Receiver</th><th className="p-2 text-right">Total Amount (៛)</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="divide-y divide-slate-700">
                                 {iitPaymentData.map((t, index) => (
-                                    <tr key={index} className="border-b">
-                                        <td className="p-2">{index + 1}</td><td className="p-2">{t.payee}</td>
-                                        <td className="p-2">{t.receiver}</td><td className="p-2 text-right font-mono">{(t.totalAmount || 0).toLocaleString()}</td>
+                                    <tr key={index}>
+                                        <td className="p-2 text-slate-300">{index + 1}</td><td className="p-2 text-slate-200">{t.payee}</td>
+                                        <td className="p-2 text-slate-200">{t.receiver}</td><td className="p-2 text-right font-mono text-slate-300">{(t.totalAmount || 0).toLocaleString()}</td>
                                     </tr>
                                 ))}
                             </tbody>
+                            <tfoot className="bg-slate-800 font-bold text-slate-200">
+                                <tr>
+                                    <td colSpan="3" className="p-2 text-right">Sub-Total</td>
+                                    <td className="p-2 text-right font-mono">{subtotal.toLocaleString()}</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </Card>
             );
         };
-        // --- END: CashFlow Report Page ---
+        // #endregion
 
-        // --- START: Personal CashFlow Management ---
-        const PersonalCashFlowManagement = () => {
-            const { personalCashflowStatements, appSettings } = useData();
+         // =================================================================================
+        // #region PERSONAL CASHFLOW TAB
+        // =================================================================================
+        const StatementEditModal = ({ statement, onClose }) => {
             const { showNotification } = useNotification();
-            const { addDoc, collection } = window.Firebase;
-            const [isSubmitting, setIsSubmitting] = useState(false);
+            const { updateDoc, doc } = window.Firebase;
             const isMounted = useRef(true);
+            
+            const [formData, setFormData] = useState({
+                ...statement,
+                date: formatInCambodiaDateOnly(statement.createdAt),
+                amount: String(statement.amount || ''),
+            });
+            const [isSubmitting, setIsSubmitting] = useState(false);
 
             useEffect(() => {
                 isMounted.current = true;
                 return () => { isMounted.current = false; };
             }, []);
 
-            const getInitialState = useCallback(() => ({
-                date: getCambodiaISODate(),
-                statementType: 'Deposit',
-                currency: 'KHR',
-                amount: '',
-                purpose: '',
-                note: ''
-            }), []);
+            const handleChange = useCallback((e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+            }, []);
 
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!isMounted.current) return;
+                setIsSubmitting(true);
+                try {
+                    const updatedData = {
+                        ...formData,
+                        amount: parseFormattedNumber(formData.amount),
+                        createdAt: createTimestampFromDateAndCurrentTime(formData.date),
+                        flowType: formData.statementType === 'Deposit' ? 'Inflow' : 'Outflow'
+                    };
+                    delete updatedData.id;
+                    delete updatedData.balanceKhr;
+                    delete updatedData.balanceUsd;
+                    delete updatedData.totalBalance;
+                    
+                    await updateDoc(doc(window.db, "personalCashflowStatements", statement.id), updatedData);
+                    showNotification("Statement updated successfully!", "success");
+                    if (isMounted.current) onClose();
+                } catch (error) {
+                    console.error("Update error:", error);
+                    showNotification("Failed to update statement.", "error");
+                } finally {
+                    if (isMounted.current) setIsSubmitting(false);
+                }
+            };
+
+            return (
+                <Modal title="Edit Statement" onClose={onClose} size="lg">
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FormInput label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
+                            <FormSelect label="Statement Type" name="statementType" value={formData.statementType} onChange={handleChange} options={[{value: 'Deposit', label: 'Deposit'}, {value: 'Withdrawal', label: 'Withdrawal'}]} />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FormSelect label="Currency" name="currency" value={formData.currency} onChange={handleChange} options={[{value: 'KHR', label: 'KHR'}, {value: 'USD', label: 'USD'}]} />
+                            <LiveFormatInput label="Amount" name="amount" value={formData.amount} onChange={handleChange} />
+                        </div>
+                        <FormInput label="Purpose" name="purpose" value={formData.purpose} onChange={handleChange} />
+                        <FormTextarea label="Note" name="note" value={formData.note} onChange={handleChange} />
+                        <div className="flex justify-end gap-4 pt-4 border-t border-slate-700">
+                            <Button type="button" variant="secondary" onClick={onClose}>Cancel</Button>
+                            <Button type="submit" disabled={isSubmitting} icon={isSubmitting ? "LoaderCircle" : null}>
+                                {isSubmitting ? 'Saving...' : 'Save Changes'}
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
+            );
+        };
+
+        const PersonalCashFlowManagement = () => {
+            const { personalCashflowStatements, appSettings } = useData();
+            const { showNotification } = useNotification();
+            const { addDoc, collection, deleteDoc, doc } = window.Firebase;
+            const [isSubmitting, setIsSubmitting] = useState(false);
+            const [editingStatement, setEditingStatement] = useState(null);
+            const [deletingStatement, setDeletingStatement] = useState(null);
+            const [isDeleting, setIsDeleting] = useState(false);
+            const isMounted = useRef(true);
+
+            const [filters, setFilters] = useState({
+                statementType: 'All',
+                year: 'All',
+                month: 'All'
+            });
+
+            useEffect(() => {
+                isMounted.current = true;
+                return () => { isMounted.current = false; };
+            }, []);
+
+            const getInitialState = useCallback(() => ({ 
+                date: getCambodiaISODate(), 
+                statementType: 'Deposit', 
+                flowType: 'Inflow',
+                currency: 'KHR', 
+                amount: '', 
+                purpose: '', 
+                note: '' 
+            }), []);
             const [formState, setFormState] = useState(getInitialState());
 
             const handleFormChange = (e) => {
                 const { name, value } = e.target;
-                setFormState(prev => ({
-                    ...prev,
-                    [name]: value,
-                    ...(name === 'statementType' && { flowType: value === 'Deposit' ? 'Inflow' : 'Outflow' })
-                }));
+                setFormState(prev => ({ ...prev, [name]: value, ...(name === 'statementType' && { flowType: value === 'Deposit' ? 'Inflow' : 'Outflow' }) }));
+            };
+
+            const handleFilterChange = (e) => {
+                const { name, value } = e.target;
+                setFilters(prev => ({...prev, [name]: value}));
             };
 
             const handleSubmit = async (e) => {
@@ -2855,43 +3010,81 @@
                 if (!isMounted.current) return;
                 setIsSubmitting(true);
                 try {
-                    await addDoc(collection(db, 'personalCashflowStatements'), {
-                        ...formState,
+                    const dataToSave = {
+                         ...formState,
                         amount: parseFormattedNumber(formState.amount),
-                        createdAt: createTimestampFromDateAndCurrentTime(formState.date)
-                    });
+                        createdAt: createTimestampFromDateAndCurrentTime(formState.date),
+                        flowType: formState.statementType === 'Deposit' ? 'Inflow' : 'Outflow'
+                    };
+                    await addDoc(collection(db, 'personalCashflowStatements'), dataToSave);
                     showNotification('Statement added successfully!', 'success');
-                    if (isMounted.current) {
-                        setFormState(getInitialState());
-                    }
+                    if (isMounted.current) setFormState(getInitialState());
                 } catch (error) {
                     showNotification('Failed to add statement.', 'error');
                 } finally {
+                    if (isMounted.current) setIsSubmitting(false);
+                }
+            };
+
+            const handleDelete = async () => {
+                if (!deletingStatement) return;
+                setIsDeleting(true);
+                try {
+                    await deleteDoc(doc(db, 'personalCashflowStatements', deletingStatement.id));
+                    showNotification('Statement deleted.', 'success');
+                } catch (error) {
+                    showNotification('Failed to delete statement.', 'error');
+                } finally {
                     if (isMounted.current) {
-                        setIsSubmitting(false);
+                        setDeletingStatement(null);
+                        setIsDeleting(false);
                     }
                 }
             };
             
+            const { years, months } = useMemo(() => {
+                const years = [...new Set(personalCashflowStatements.filter(s => s.createdAt).map(s => s.createdAt.toDate().getFullYear()))].sort((a,b) => b-a);
+                const months = [...new Set(personalCashflowStatements.filter(s => s.createdAt && (filters.year === 'All' || s.createdAt.toDate().getFullYear() == filters.year)).map(s => s.createdAt.toDate().getMonth()))]
+                    .sort((a,b) => a-b)
+                    .map(m => ({ value: m + 1, label: new Date(0, m).toLocaleString('default', { month: 'long' }) }));
+                return { years, months };
+            }, [personalCashflowStatements, filters.year]);
+
             const historyWithBalance = useMemo(() => {
-                let balanceKhr = 0;
-                let balanceUsd = 0;
                 const sorted = [...personalCashflowStatements].sort((a,b) => (a.createdAt?.toMillis() || 0) - (b.createdAt?.toMillis() || 0));
                 
-                return sorted.map(statement => {
+                let balanceKhr = 0;
+                let balanceUsd = 0;
+                const result = [];
+
+                for (const statement of sorted) {
                     const amount = statement.amount || 0;
-                    if(statement.statementType === 'Deposit'){
-                        if(statement.currency === 'KHR') balanceKhr += amount;
+                    if (statement.statementType === 'Deposit') {
+                        if (statement.currency === 'KHR') balanceKhr += amount;
                         else balanceUsd += amount;
                     } else { // Withdrawal
-                        if(statement.currency === 'KHR') balanceKhr -= amount;
+                        if (statement.currency === 'KHR') balanceKhr -= amount;
                         else balanceUsd -= amount;
                     }
                     const totalBalance = balanceKhr + (balanceUsd * (appSettings.exchangeRate || 4100));
-                    return {...statement, balanceKhr, balanceUsd, totalBalance};
-                });
+                    result.push({ ...statement, balanceKhr, balanceUsd, totalBalance });
+                }
+                
+                return result;
             }, [personalCashflowStatements, appSettings.exchangeRate]);
+            
+            const filteredHistory = useMemo(() => {
+                return historyWithBalance.filter(item => {
+                    if (!item.createdAt) return false;
+                    const date = item.createdAt.toDate();
+                    const yearMatch = filters.year === 'All' || date.getFullYear() == filters.year;
+                    const monthMatch = filters.month === 'All' || (date.getMonth() + 1) == filters.month;
+                    const statementTypeMatch = filters.statementType === 'All' || item.statementType === filters.statementType;
+                    return yearMatch && monthMatch && statementTypeMatch;
+                }).reverse();
+            }, [historyWithBalance, filters]);
 
+            const finalBalance = historyWithBalance[historyWithBalance.length - 1] || { balanceKhr: 0, balanceUsd: 0, totalBalance: 0 };
 
             return (
                 <div className="space-y-6">
@@ -2909,51 +3102,75 @@
                                 <FormInput label="Purpose" name="purpose" value={formState.purpose} onChange={handleFormChange} />
                             </div>
                             <FormTextarea label="Note" name="note" value={formState.note} onChange={handleFormChange} />
-                            <div className="flex justify-end">
-                                <Button type="submit" disabled={isSubmitting} icon={isSubmitting ? "LoaderCircle" : null}>
-                                    {isSubmitting ? 'Adding...' : 'Add Statement'}
-                                </Button>
-                            </div>
+                            <div className="flex justify-end"><Button type="submit" disabled={isSubmitting} icon={isSubmitting ? "LoaderCircle" : null}>{isSubmitting ? 'Adding...' : 'Add Statement'}</Button></div>
                         </form>
                     </Card>
                     <Card>
                         <h2 className="text-xl font-bold mb-4">Cashflow Statement History</h2>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm">
-                                <thead className="bg-gray-100">
-                                    <tr>
-                                        <th className="p-2 text-left">Date</th>
-                                        <th className="p-2 text-left">Purpose</th>
-                                        <th className="p-2 text-left">Statement Type</th>
-                                        <th className="p-2 text-left">Flow Type</th>
-                                        <th className="p-2 text-right">Balance KHR</th>
-                                        <th className="p-2 text-right">Balance USD</th>
-                                        <th className="p-2 text-right">Balance (៛)</th>
-                                        <th className="p-2 text-left">Note</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {historyWithBalance.map(item => (
-                                        <tr key={item.id} className="border-b">
-                                            <td className="p-2">{formatInCambodiaDateOnly(item.createdAt)}</td>
-                                            <td className="p-2">{item.purpose}</td>
-                                            <td className="p-2">{item.statementType}</td>
-                                            <td className="p-2">{item.flowType}</td>
-                                            <td className="p-2 text-right font-mono">{item.balanceKhr.toLocaleString()}</td>
-                                            <td className="p-2 text-right font-mono">{item.balanceUsd.toLocaleString()}</td>
-                                            <td className="p-2 text-right font-mono font-bold">{item.totalBalance.toLocaleString()}</td>
-                                            <td className="p-2">{item.note}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                        
+                        <div className="bg-gray-50 p-4 rounded-lg mb-6 border">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-3">Current Balance</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <p className="text-sm text-gray-500">KHR Balance</p>
+                                    <p className="text-xl font-bold text-gray-900 font-mono">{formatCurrency(finalBalance.balanceKhr, 'KHR')}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">USD Balance</p>
+                                    <p className="text-xl font-bold text-gray-900 font-mono">{formatCurrency(finalBalance.balanceUsd, 'USD')}</p>
+                                </div>
+                                <div className="sm:border-l pl-4">
+                                    <p className="text-sm text-gray-500">Total Balance (in KHR)</p>
+                                    <p className="text-2xl font-extrabold text-indigo-600 font-mono">{formatCurrency(finalBalance.totalBalance, 'KHR')}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                             <FormSelect label="Filter by Statement Type" name="statementType" value={filters.statementType} onChange={handleFilterChange} options={[{value: 'All', label: 'All'}, {value: 'Deposit', label: 'Deposit'}, {value: 'Withdrawal', label: 'Withdrawal'}]} />
+                             <FormSelect label="Filter by Year" name="year" value={filters.year} onChange={handleFilterChange} options={[{value: 'All', label: 'All'}, ...years.map(y => ({value: y, label: y}))]} />
+                            <FormSelect label="Filter by Month" name="month" value={filters.month} onChange={handleFilterChange} options={[{value: 'All', label: 'All'}, ...months]} />
+                        </div>
+
+                        <div className="space-y-3">
+                            {filteredHistory.length > 0 ? filteredHistory.map(item => {
+                                const isDeposit = item.statementType === 'Deposit';
+                                const amountColor = isDeposit ? 'text-green-600' : 'text-red-600';
+                                const iconContainerColor = isDeposit ? 'bg-green-100' : 'bg-red-100';
+                                const iconColor = isDeposit ? 'text-green-500' : 'text-red-500';
+
+                                return (
+                                    <div key={item.id} className="group flex items-center p-3 bg-white rounded-lg border hover:bg-gray-50 transition-colors">
+                                        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${iconContainerColor}`}>
+                                            <Icon name={isDeposit ? 'ArrowUp' : 'ArrowDown'} className={iconColor} size={20} />
+                                        </div>
+                                        <div className="flex-grow ml-4">
+                                            <p className="font-semibold text-gray-800">{item.purpose || 'Transaction'}</p>
+                                            <p className="text-sm text-gray-500">{formatInCambodiaDateOnly(item.createdAt)} - {item.note || 'No note'}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className={`font-bold text-lg font-mono ${amountColor}`}>{formatCurrency(item.amount, item.currency)}</p>
+                                            <p className="text-xs text-gray-400 font-mono">Balance: {formatCurrency(item.totalBalance, 'KHR')}</p>
+                                        </div>
+                                        <div className="flex flex-col ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <Button variant="ghost" size="sm" onClick={() => setEditingStatement(item)}><Icon name="PenSquare" size={14} /></Button>
+                                            <Button variant="ghost" size="sm" onClick={() => setDeletingStatement(item)} className="text-red-500"><Icon name="Trash2" size={14} /></Button>
+                                        </div>
+                                    </div>
+                                )
+                            }) : (
+                                <p className="text-center text-gray-500 py-8">No statements for the selected period.</p>
+                            )}
                         </div>
                     </Card>
+                    {editingStatement && <StatementEditModal statement={editingStatement} onClose={() => setEditingStatement(null)} />}
+                    {deletingStatement && <ConfirmationModal title="Delete Statement" message="Are you sure you want to delete this statement?" onConfirm={handleDelete} onClose={() => setDeletingStatement(null)} isSubmitting={isDeleting} confirmVariant="danger" confirmText="Delete" />}
                 </div>
             )
         }
-        // --- END: Personal CashFlow Management ---
-        // --- START: Settings Page ---
+        // #endregion
+        
+         // --- START: Settings Page ---
         const SettingsPage = () => {
             const [activeTab, setActiveTab] = useState('shops');
 
